@@ -18,3 +18,24 @@
 .form-inline{
 	margin-left: 50px;
 }
+/*style of the profile page*/
+#userDetailsBox{
+	overflow-y: hidden;
+	overflow-x: hidden;
+	width: 400px;
+	float: left;
+	padding: 10px;
+}
+#profilePic{
+	float: left;
+	width: 120px;
+	height: 180px;
+}
+.userName{
+	border-bottom: 1px solid black;
+}
+#book{
+	clear: left;
+	width: 50px;
+	height: 100px;
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="#">EqraA</a>
+    <img src="images/rlogo.png" alt="logo" style="width:40px;">
+  </a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Home</a>
+    </li>
+
+    <li class="nav-item">
+      <img src="images/user.png" alt="logo" style="width:40px;">
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">My profile</a>
+    </li>
+
+    </li>
+    <li class="nav-item">
+      <img src="images/genres.png" alt="logo" style="width:40px;">
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Genres</a>
+    </li>
+  </ul>
+
+  <form class="form-inline" action="">
+    <input class="form-control" type="text" placeholder="Search books">
+    <button class="btn btn-success" type="submit">Search</button>
+  </form>
+</nav>
+<!-- content -->
+<div class="container-fluid">
+  <div class="userProfile">
+
+    <div class="profilePic">
+      <img id="profilePic" src="images/profilePic.png">
+    </div>
+
+    <div class="userDetailsBox">
+      <h1 id="userName">User Name</h1>
+      <div id="editProfile"><font size="3"><a href="#">(edit profile)</a></font></div>
+      <div>Details</div>
+      <div>Cairo, Egypt</div>
+      <div>Activity</div>
+      <div>Cairo, Egypt</div>  
+    </div>
+
+  </div>
+  <!-- user book shelf -->
+  <div class="bookShelf">
+  <div>Your Books</div>
+    <div class="book">
+      <a href="#">
+        <div><img src="images/book.jpg"></div>
+        <div>Book Name</div>
+      </a>
+      <div class="authorLink">
+        <a href="#">Author</a>
+      </div>
+      <div>
+          <select class="status">
+            <option>Wish to read</option>
+            <option>reading</option>
+            <option>read</option>
+          </select>
+      </div>
+    </div>
+
+    <div class="book">
+      <a href="#">
+        <div><img src="images/book.jpg"></div>
+        <div>Book Name</div>
+      </a>
+      <div>
+          <select class="status">
+            <option>Wish to read</option>
+            <option>reading</option>
+            <option>read</option>
+          </select>
+        </div>
+    </div>
+
+    <div class="book">
+      <a href="#">
+        <div><img src="images/book.jpg"></div>
+        <div>Book Name</div>
+      </a>
+        <div>
+          <select class="status">
+            <option>Wish to read</option>
+            <option>reading</option>
+            <option>read</option>
+          </select>
+        </div>
+    </div>
+
+  </div>
+
+
+
+</div>
+
+</body>
+</html>
