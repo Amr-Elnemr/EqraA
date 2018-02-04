@@ -11,7 +11,7 @@ class Book(models.Model):
 	"""docstring for Book"""
 	title = models.CharField(max_length=100)
 	published_date = models.DateField()
-	summary = models.CharField(max_length=500)
+	summary = models.TextField(max_length=500)
 	language = models.CharField(max_length=50)
 	link = models.URLField(max_length=200)
 	categories = models.ManyToManyField(Category)
@@ -24,7 +24,7 @@ class Author(models.Model):
 	date_of_birth = models.DateField()
 	date_of_death = models.DateField(null=True)
 	url = models.URLField(null=True)
-	bio = models.CharField(max_length=1000)
+	bio = models.TextField(max_length=1000)
 	books = models.ManyToManyField(Book, through='Write')
 
 
