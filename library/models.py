@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
 	"""docstring for Category"""
 	name = models.CharField(max_length=(30))
+	users = models.ManyToManyField(User, through='Favor')
 
 
 class Book(models.Model):
@@ -36,6 +37,11 @@ class Read(models.Model):
 	status = models.CharField(max_length=1, choices=status_choices)
 
 class Write(models.Model):
-	Author = models.ForeignKey(Author, on_delete=models.CASCADE)
+	author = models.ForeignKey(Author, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
 		
+
+class Favor(models.Model):
+	"""docstring for Favor"""
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	book = models.ForeignKey(Category, on_delete=models.CASCADE)
