@@ -1,0 +1,33 @@
+.navbar {
+    background-color: #008080;
+    border-color: black;
+}
+
+.navbar-brand{
+	font-size: 30px;
+	font-family: serif;
+	color: white;
+	margin-right: 50px;
+}
+
+.nav-link{
+	color:white;
+}
+
+
+.form-inline{
+	margin-left: 50px;
+}
+
+.row{
+	margin-top: 10px;
+}
+
+.side-active{
+ 	background-color: #008080;
+ 	color: white;
+}
+
+.list-link{
+	margin: 10px;
+}
