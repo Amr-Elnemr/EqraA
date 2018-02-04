@@ -24,11 +24,7 @@ class Author(models.Model):
 	date_of_death = models.DateField(null=True)
 	url = models.URLField(null=True)
 	bio = models.CharField(max_length=1000)
-	books = models.ManyToManyField(Book)
-
-# class User(User):
-# 	"""docstring for User"""
-# 	pass
+	books = models.ManyToManyField(Book, through='Write')
 
 
 class Read(models.Model):
@@ -38,3 +34,8 @@ class Read(models.Model):
 	rate = models.SmallIntegerField(null=True)
 	status_choices =   (('R', 'Read'), ('W', 'Wish'), ('C', 'Currently'))
 	status = models.CharField(max_length=1, choices=status_choices)
+
+class Write(models.Model):
+	Author = models.ForeignKey(Author, on_delete=models.CASCADE)
+	book = models.ForeignKey(Book, on_delete=models.CASCADE)
+		
