@@ -1,17 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bootstrap Example</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    
+  <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+  <title>home</title>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-sm">
   <!-- Brand/logo -->
   <a class="navbar-brand" href="#">
     <a class="navbar-brand" href="#">EqraA</a>
-    <img src="images/rlogo.png" alt="logo" style="width:40px;">
+    <img src="{% static "images/rlogo.png" %}" alt="logo" style="width:40px;">
   </a>
   
   <!-- Links -->
@@ -21,7 +27,7 @@
     </li>
 
     <li class="nav-item">
-      <img src="images/user.png" alt="logo" style="width:40px;">
+      <img src="{% static "images/user.png" %}" alt="logo" style="width:40px;">
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">My profile</a>
@@ -29,7 +35,7 @@
 
     </li>
     <li class="nav-item">
-      <img src="images/genres.png" alt="logo" style="width:40px;">
+      <img src="{% static "images/genres.png" %}" alt="logo" style="width:40px;">
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Genres</a>
@@ -41,10 +47,5 @@
     <button class="btn btn-success" type="submit">Search</button>
   </form>
 </nav>
-
-<div class="container-fluid">
-  <h3>template</h3>
-</div>
-
-</body>
-</html>
+{% block body %}
+{% endblock %}
