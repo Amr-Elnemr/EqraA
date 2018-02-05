@@ -4,7 +4,7 @@
 }
 
 .navbar-brand{
-	font-size: 30px;
+	font-size: 40px;
 	font-family: serif;
 	color: white;
 	margin-right: 50px;
@@ -14,53 +14,71 @@
 	color:white;
 }
 
+.navbar-brand:hover{
+	color: white;
+}
 
+.nav-link:hover {
+	color:#ffe6cc;
+}
 .form-inline{
 	margin-left: 50px;
 }
 
 .row{
-	margin-top: 10px;
+	margin-top: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
 }
 
-.side-active{
- 	background-color: #008080;
- 	color: white;
+#Author-cover{
+	width:100%;
 }
 
-.list-link{
-	margin: 10px;
-}
-.img-div{
-	width: 100%;
-	height:85%;
-}
-.div-author{
-	margin-top: -14px;
-}
-.top-rate-tittle{
-	
-}
-.list-item{
-	width: 70%;
-	height: 20%;
-}
-.top-rate-bar{
-
+#other-books{
+	width: 40%;
+	margin-top:10%;
 }
 
-.row.vdivide [class*='col-']:not(:last-child):after {
-  background: #e0e0e0;
-  width: 1px;
-  content: "";
-  display:block;
-  position: absolute;
-  top:0;
-  bottom: 0;
-  right: 0;
-  min-height: 70px;
+#book-cover{
+	width:80%;
 }
 
-.custom-row{
+#current-rating{
+	text-align: left;
+}
 
+.btn {
+	border-color: white;
+}
+
+.subtitles{
+	margin-top: 5%;
+}
+
+.genres{
+	margin-right: 20px;
+}
+
+#description{
+	text-align: justify;
+	text-justify: inter-word;
+}
+
+.read-state{
+	background-color: #EEE8AA;
+	width: 60%;
+	margin-top: 10%;
+}
+
+
+
+.fa {
+    font-size: 25px;
+    text-decoration: none !important;
+	color: inherit;
+}
+
+.checked {
+    color: orange;
 }
