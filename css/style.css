@@ -1,0 +1,85 @@
+.navbar {
+    background-color: #008080;
+    border-color: black;
+}
+
+.navbar-brand{
+	font-size: 40px;
+	font-family: serif;
+	color: white;
+	margin-right: 50px;
+}
+
+.nav-link{
+	color:white;
+}
+
+.navbar-brand:hover{
+	color: white;
+}
+
+.nav-link:hover {
+	color:#ffe6cc;
+}
+.form-inline{
+	margin-left: 50px;
+}
+
+.row{
+	margin-top: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+#Author-cover{
+	width:100%;
+}
+
+#other-books{
+	width: 40%;
+	margin-top:10%;
+}
+
+#book-cover{
+	width:80%;
+}
+
+#current-rating{
+	text-align: left;
+}
+
+.btn {
+	border-color: white;
+}
+
+.subtitles{
+	margin-top: 5%;
+}
+
+.genres{
+	margin-right: 20px;
+}
+
+#description{
+	text-align: justify;
+	text-justify: inter-word;
+}
+
+.read-state{
+	background-color: #EEE8AA;
+	width: 60%;
+	margin-top: 10%;
+}
+
+
+
+.fa {
+    font-size: 25px;
+    text-decoration: none !important;
+	color: inherit;
+}
+
+.checked {
+    color: orange;
+}
+
