@@ -6,6 +6,7 @@ from library.models import Read
 from library.models import Write
 from library.models import Author
 from library.classes import BookDetail
+from django.db.models import Avg
 
 
 # Create your views here.
@@ -25,5 +26,8 @@ def home(request,id):
 
 def book(request, Id):
 	book = Book.objects.get(id = Id)
-	return render(request, 'library/Book.html', {"book":book})
+	authors_books = book.write_set.all()
+	authors = [i.author for i in authors_books]
+	book_rate = book.read_set.aggregate(Avg('rate'))['rate__avg']
+	return render(request, 'library/Book.html', {"book":book, "authors":authors, "book_rate": book_rate})
 	

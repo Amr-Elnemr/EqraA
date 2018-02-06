@@ -10,7 +10,7 @@ class Book(models.Model):
 	"""docstring for Book"""
 	title = models.CharField(max_length=100)
 	published_date = models.DateField()
-	summary = models.CharField(max_length=500)
+	summary = models.TextField()
 	language = models.CharField(max_length=50)
 	link = models.URLField(max_length=200)
 	pic = models.ImageField(upload_to = 'book') #author is a folder in MEDIA_ROOT
@@ -33,11 +33,10 @@ class Read(models.Model):
 	"""docstring for Read"""
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
-	rate = models.SmallIntegerField(null=True)
+	rate = models.SmallIntegerField(choices=[(i, i) for i in range(1, 6)], null=True)
 	status_choices =   (('R', 'Read'), ('W', 'Wish'), ('C', 'Currently'))
 	status = models.CharField(max_length=1, choices=status_choices)
 
 class Write(models.Model):
-	Author = models.ForeignKey(Author, on_delete=models.CASCADE)
+	author = models.ForeignKey(Author, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
-		
