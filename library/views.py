@@ -10,18 +10,27 @@ from library.classes import BookDetail
 
 # Create your views here.
 
-def home(request,id):
+def home(request,Id):
 	categories = Category.objects.all()
 	topRate = Read.objects.filter().order_by('rate')[:5]
 	topBooks = []
 	for x in topRate:
 		global topBooks
-		book=Book.objects.get(id = x.book)
+		book=Book.objects.get(id = x.book_id)
 		wAuthor = Write.objects.get(book = book.id)
-		author = Author.objects.get(id = wAuthor.Author)
-		bookdetail =BookDetail(book.id,book.title,author.id,author.full_name)
+		author = Author.objects.get(id = wAuthor.Author_id)
+		bookdetail =BookDetail(book.id,book.title,author.id,author.full_name,book.pic,book.summary)
 		topBooks.append(bookdetail)
-	return render(request, 'library/home.html', {'categories': categories, 'topBooks':topBooks})
+	yourbooks = Read.objects.filter(user_id = Id)
+	userBooks = []
+	for x in yourbooks:
+		global userBooks
+		book=Book.objects.get(id = x.book_id)
+		wAuthor = Write.objects.get(book = book.id)
+		author = Author.objects.get(id = wAuthor.Author_id)
+		bookdetail =BookDetail(book.id,book.title,author.id,author.full_name,book.pic,book.summary)
+		userBooks.append(bookdetail)
+	return render(request, 'library/home.html', {'categories': categories, 'topBooks':topBooks, 'userBooks':userBooks})
 
 def book(request, Id):
 	book = Book.objects.get(id = Id)
