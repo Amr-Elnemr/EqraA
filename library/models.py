@@ -13,6 +13,7 @@ class Book(models.Model):
 	summary = models.CharField(max_length=500)
 	language = models.CharField(max_length=50)
 	link = models.URLField(max_length=200)
+	pic = models.ImageField(upload_to = 'book') #author is a folder in MEDIA_ROOT
 	categories = models.ManyToManyField(Category)
 	users = models.ManyToManyField(User, through='Read')
 
@@ -23,7 +24,8 @@ class Author(models.Model):
 	date_of_birth = models.DateField()
 	date_of_death = models.DateField(null=True)
 	url = models.URLField(null=True)
-	bio = models.CharField(max_length=1000)
+	bio = models.TextField()
+	pic = models.ImageField(upload_to = 'author') #author is a folder in MEDIA_ROOT
 	books = models.ManyToManyField(Book, through='Write')
 
 

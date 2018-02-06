@@ -46,7 +46,7 @@
 <!-- ------------------ Body -------------------- -->
 <div class="row">
   <div class="col-sm-3">
-    <img id="book-cover" src="/media/images/bkcover.jpg">
+    <img id="book-cover" src="/media/{{ book.pic }}">
     <h5 class="subtitles">Current rating: (4/5) </h5>
     <div id="current-rating">
       <p class="fa fa-star checked"></p>
@@ -60,7 +60,7 @@
   <div class="col-sm-6">
 
     <!-- title -->
-    <h2>Harry Potter and the Goblet of Fire</h2>
+    <h2>{{ book.title }}</h2>
 
     <!-- genres -->
     <h5 class="subtitles">Genres: </h5>
