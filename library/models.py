@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
 	"""docstring for Category"""
 	name = models.CharField(max_length=(30))
+	user = models.ManyToManyField(User)
 
 
 class Book(models.Model):
