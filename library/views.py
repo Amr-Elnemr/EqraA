@@ -45,9 +45,12 @@ def book(request, Id):
 
 def rate_apply(request, book_id, rate, status):
 	book = Book.objects.get(id=book_id)
+	user = request.user
 	read_obj = Read.objects.filter(book=book,user=request.user)
 	read_obj = read_obj if read_obj else 0
 	if read_obj:
 		read_obj.status = status
 		read_obj.rate = rate
 		read_obj.save()
+	else:
+		Read.objects.create(user=user, book=book, rate=rate, status=status)
