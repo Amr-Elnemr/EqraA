@@ -33,9 +33,9 @@ class Read(models.Model):
 	"""docstring for Read"""
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
-	rate = models.SmallIntegerField(choices=[(i, i) for i in range(1, 6)], null=True, default=None)
+	rate = models.SmallIntegerField(choices=[(i, i) for i in range(1, 6)], null=True)
 	status_choices =   (('R', 'R'), ('W', 'W'), ('C', 'C'))
-	status = models.CharField(max_length=1, choices=status_choices, null=True, default=None)
+	status = models.CharField(max_length=1, choices=status_choices, null=True)
 
 class Write(models.Model):
 	author = models.ForeignKey(Author, on_delete=models.CASCADE)
