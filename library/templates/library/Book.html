@@ -49,11 +49,17 @@
     <img id="book-cover" src="/media/{{ book.pic }}">
     <h5 class="subtitles">Current rating: {{ book_rate }} </h5>
     <div id="current-rating">
-      <p class="fa fa-star checked"></p>
-      <p class="fa fa-star checked"></p>
-      <p class="fa fa-star checked"></p>
-      <p class="fa fa-star checked"></p>
-      <p class="fa fa-star "></p>
+      {% for star in "12345" %}
+       
+        {% if star|add:"0" <= book_rate %}
+          <p class="fa fa-star checked"></p>
+        {% endif %}
+
+        {% if  star|add:"0" > book_rate %}
+          <p class="fa fa-star "></p>
+        {% endif %}
+      {% endfor %}
+
     
   </div>
   </div>
@@ -84,7 +90,7 @@
   <div class="col-sm-3">
     <h5 class="subtitles" id="myrating">My rating (0/5) </h5>
 
-  <div id="myrating-div">
+  <div id="myrating-div" class={% if user_rate %}"star{{ user_rate }}"{% endif %}>
     <a class="fa fa-star" id="star1" href="#"></a>
     <a class="fa fa-star" id="star2" href="#"></a>
     <a class="fa fa-star" id="star3" href="#"></a>
@@ -106,19 +112,51 @@
 
 
 <script>
-
     
-    rateHover = function (e) {
+    var myRatingDiv = document.getElementById('myrating-div')
+    var myRating = myRatingDiv.className ? myRatingDiv.className : ""
+
+    var applyRate = function (element,num) {
+      for(var i=0; i<num; i++){
+        element.children[i].className+= " checked"
+      }
+    }
+
+    var removeRate = function () {
+      for(var i=0; i<myRatingDiv.children.length; i++){
+        myRatingDiv.children[i].className = "fa fa-star"
+      }
+      myRatingDiv.className = ""
+    }
+    
+    var rateHandler = function (e) {
+      eventType = e.type
       currentNode = e.target
       if(currentNode.id.substring(0, 4)=='star'){
         starsNum = currentNode.id.substring(4)
-        for(var i=0; i<starsNum; i++){
-          currentNode.parentElement.children[i].className+= " checked"
-        }
+        applyRate(currentNode.parentElement, starsNum)
+      }
+      if(eventType == 'click'){
+        currentNode.parentElement.className = "star"+starsNum
+      }
+      else if (eventType == 'mouseout' && !myRatingDiv.className) {
+        removeRate()
       }
     }
-    document.getElementById('myrating-div').addEventListener('mouseover', rateHover)
-    document.getElementById('myrating-div').addEventListener('click', rateHover)
+
+    myRatingDiv.addEventListener('mouseover', rateHandler)
+    myRatingDiv.addEventListener('click', rateHandler)
+    myRatingDiv.addEventListener('mouseout', rateHandler)
+   
+    document.addEventListener("DOMContentLoaded", function (){
+      if (myRatingDiv.className){
+        var starsNum = myRatingDiv.className.substring(4)
+        applyRate(myRatingDiv, starsNum)
+      }
+    }
+    )
+    
+
 
     // document.getElementById("star1").addEventListener("click", function(){rate(1)})
     // document.getElementById("star2").addEventListener("click", function(){rate(2)})
