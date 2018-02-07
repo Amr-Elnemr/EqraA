@@ -8,6 +8,7 @@ from library.models import Write
 from library.models import Author
 from library.classes import BookDetail
 from django.db.models import Avg
+import json
 
 
 # Create your views here.
@@ -38,8 +39,12 @@ def book(request, Id):
 	book = Book.objects.get(id = Id)
 	authors_books = book.write_set.all()
 	authors = [i.author for i in authors_books]
-	book_rate = book.read_set.aggregate(Avg('rate'))['rate__avg']
-	return render(request, 'library/Book.html', {"book":book, "authors":authors, "book_rate": book_rate})
+	book_rate = round(book.read_set.aggregate(Avg('rate'))['rate__avg'],2)
+	user_book = book.read_set.filter(user=request.user.id, book=book.id)
+	user_rate = user_book[0].rate if user_book else 0
+	user_status = user_book[0].status if user_book else 0
+	return render(request, 'library/Book.html', {"book":book, "authors":authors, "book_rate": book_rate, "user_rate": user_rate, 'user_status':user_status})
+	
 
 def categories(request):
 	categories = Category.objects.all() 
@@ -63,3 +68,20 @@ def search(request,q):
 		books.append(bookdetail)
 		data ={"books":books}
 	HttpResponse("ghgujhjh")
+	
+def rate_apply(request, book_id):
+	book = Book.objects.get(id=book_id)
+	user = request.user
+	read_obj = Read.objects.filter(book=book,user=request.user)
+	read_obj = read_obj[0] if read_obj else 0
+	rate = request.GET['rate'] if request.GET['rate']!='0' else (read_obj.rate if read_obj else 0)
+	status = request.GET['status'] if request.GET['status']!='0' else (read_obj.status if read_obj else 0)
+	if read_obj:
+		read_obj.status = status
+		read_obj.rate = rate
+		read_obj.save()		
+		return HttpResponse(json.dumps({'req_status':'ok'}))
+	else:
+		Read.objects.create(user=user, book=book, rate=rate, status=status)
+		return HttpResponse(json.dumps({'req_status':'ok'}))
+

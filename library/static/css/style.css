@@ -140,3 +140,7 @@
 .grid-books{
 	text-align: center;
 }
+
+.fa-star:hover{
+	color: black;
+}

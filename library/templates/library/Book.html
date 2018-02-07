@@ -49,11 +49,17 @@
     <img id="book-cover" src="/media/{{ book.pic }}">
     <h5 class="subtitles">Current rating: {{ book_rate }} </h5>
     <div id="current-rating">
-      <p class="fa fa-star checked"></p>
-      <p class="fa fa-star checked"></p>
-      <p class="fa fa-star checked"></p>
-      <p class="fa fa-star checked"></p>
-      <p class="fa fa-star "></p>
+      {% for star in "12345" %}
+       
+        {% if star|add:"0" <= book_rate %}
+          <p class="fa fa-star checked"></p>
+        {% endif %}
+
+        {% if  star|add:"0" > book_rate %}
+          <p class="fa fa-star "></p>
+        {% endif %}
+      {% endfor %}
+
     
   </div>
   </div>
@@ -84,19 +90,26 @@
   <div class="col-sm-3">
     <h5 class="subtitles" id="myrating">My rating (0/5) </h5>
 
-  <div id="myrating-div">
-    <a class="fa fa-star" id="star1" href="#"></a>
-    <a class="fa fa-star" id="star2" href="#"></a>
-    <a class="fa fa-star" id="star3" href="#"></a>
-    <a class="fa fa-star" id="star4" href="#"></a>
-    <a class="fa fa-star" id="star5" href="#"></a>
+  <div id="myrating-div" class={% if user_rate %}"star{{ user_rate }}"{% endif %}>
+    {% for star in "12345" %}
+      {% if star|add:"0" <= user_rate  %}
+        <p class="fa fa-star checked" id="star{{ star|add:"0" }}"></p>
+      {% endif %}
+
+      {% if  star|add:"0" > user_rate  %}
+        <p class="fa fa-star " id="star{{ star|add:"0" }}"></p>
+      {% endif %}
+    {% endfor %}
+
+
   </div>
   
    <div >
-    <select class="form-control read-state">
-      <option>Want to read</option>
-      <option>Read</option>
-      <option>Currently reading</option>
+    <select id="status" name="status" class="form-control read-state">
+      <option value="0" selected>Choose</option>
+      <option value="W" {% if user_status == "W" %} selected {% endif %}>Want to read</option>
+      <option value="R" {% if user_status == "R" %} selected {% endif %}>Read</option>
+      <option value="C" {% if user_status == "C" %} selected {% endif %}>Currently reading</option>
     </select>
   </div>
 
@@ -106,41 +119,107 @@
 
 
 <script>
-
     
-    rateHover = function (e) {
-      currentNode = e.target
-      if(currentNode.id.substring(0, 4)=='star'){
-        starsNum = currentNode.id.substring(4)
-        for(var i=0; i<starsNum; i++){
-          currentNode.parentElement.children[i].className+= " checked"
-        }
-      }
-    }
-    document.getElementById('myrating-div').addEventListener('mouseover', rateHover)
-    document.getElementById('myrating-div').addEventListener('click', rateHover)
+    // var myRatingDiv = document.getElementById('myrating-div')
+    // var myRating = myRatingDiv.className ? myRatingDiv.className : ""
+    // var hoverRating = myRating
 
-    // document.getElementById("star1").addEventListener("click", function(){rate(1)})
-    // document.getElementById("star2").addEventListener("click", function(){rate(2)})
-    // document.getElementById("star3").addEventListener("click", function(){rate(3)})
-    // document.getElementById("star4").addEventListener("click", function(){rate(4)})
-    // document.getElementById("star5").addEventListener("click", function(){rate(5)})
+    // var applyRate = function (element,num) {
+    //   for(var i=0; i<num; i++){
 
-    // function rate(i)
-    // {
-    //   for(j=1; j<=5; j++)
-    //   {
-    //     document.getElementById("star"+j).className="fa fa-star";
-    //   }
-
-    //   document.getElementById("myrating").textContent="My rating ("+i+"/5)"
-
-    //   while(i>0)
-    //   {
-    //     document.getElementById("star"+i).className="fa fa-star checked";
-    //     i--
+    //     element.children[i].className = "fa fa-star checked"
+    //     console.log(element.children[i], num)
     //   }
     // }
+
+    // var removeRate = function () {
+
+    //   for(var i=myRating.substring(4); i<myRatingDiv.children.length; i++){
+    //     myRatingDiv.children[i].className = "fa fa-star"
+    //   }
+    //   myRatingDiv.className = ""
+    // }
+    
+    // var rateHandler = function (e) {
+    //   eventType = e.type
+    //   currentNode = e.target
+    //   if(currentNode.id.substring(0, 4)=='star'){
+    //     starsNum = currentNode.id.substring(4)
+    //     hoverRating = "star"+starsNum
+    //     applyRate(currentNode.parentElement, starsNum)
+    //   }
+    //   if(eventType == 'click'){
+    //     currentNode.parentElement.className = "star"+starsNum
+    //     hoverRating = "star"+starsNum
+    //     myRating = "star"+starsNum
+    //   }
+    //   else if (eventType == 'mouseout' && !myRatingDiv.className || hoverRating>myRating) {
+    //     removeRate()
+    //   }
+    // }
+
+    // myRatingDiv.addEventListener('mouseover', rateHandler)
+    // myRatingDiv.addEventListener('click', rateHandler)
+    // myRatingDiv.addEventListener('mouseout', rateHandler)
+   
+    // document.addEventListener("DOMContentLoaded", function (){
+    //   if (myRatingDiv.className){
+    //     var starsNum = myRatingDiv.className.substring(4)
+    //     applyRate(myRatingDiv, starsNum)
+    //   }
+    // }
+    // )
+    
+
+
+    document.getElementById("star1").addEventListener("click", function(){rate(1)})
+    document.getElementById("star2").addEventListener("click", function(){rate(2)})
+    document.getElementById("star3").addEventListener("click", function(){rate(3)})
+    document.getElementById("star4").addEventListener("click", function(){rate(4)})
+    document.getElementById("star5").addEventListener("click", function(){rate(5)})
+
+    function rate(i)
+    {
+      for(j=1; j<=5; j++)
+      {
+        document.getElementById("star"+j).className="fa fa-star";
+      }
+
+      document.getElementById("myrating").textContent="My rating ("+i+"/5)"
+
+      while(i>0)
+      {
+        document.getElementById("star"+i).className="fa fa-star checked";
+        i--
+      }
+    }
+    var myRatingDiv = document.getElementById('myrating-div')
+    var statusDiv = document.getElementById('status')
+
+    function ajaxSuccess () {
+      var response = JSON.parse(this.responseText)
+      console.log(response)
+    }
+
+    var ajaxReruest = function (rate, status) {
+      var oReq = new XMLHttpRequest();
+      var currentURL = window.location.href
+      oReq.onload = ajaxSuccess;
+      oReq.open("get", currentURL+`edit?rate=${rate}&status=${status}`);
+      oReq.send();
+    }
+
+    myRatingDiv.addEventListener("click", function (e) {
+        starNum = e.target.id.substring(4)
+        if(e.target.id.substring(0, 4)=='star'){
+          ajaxReruest(starNum, 0)
+        }
+
+    })
+
+    statusDiv.addEventListener('change', function (e) {
+      ajaxReruest(0, this.value)
+    })
         
   </script>
 
