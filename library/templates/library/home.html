@@ -12,7 +12,7 @@
             <div href="#" class="list-item">
               <div class="img-div">
                 <a href="#" class="img-anchor">
-                <img src="/media/images/{{ t.pic }}" style="width: 100%; height: 100%">
+                <img src="/media/{{ t.pic }}" style="width: 100%; height: 100%">
               </a>
               </div>
               <div class="div-tittle">
@@ -29,13 +29,13 @@
         {% endfor %}
         
         </div>
-        <div class="col-7 books-div">
+        <div class="col-7 books-div" id="board">
           <h5 class="header">Books</h5>
           {% for u in userBooks %}
           <div class="row custom-row">
               <div class="col-sm-3 img-div">
                 <a href="#" class="img-anchor">
-                <img src="/media/images/{{ u.pic }}" class="book-img" style="width: 100%; height: 100%">
+                <img src="/media/{{ u.pic }}" class="book-img" style="width: 100%; height: 100%">
               </a>
               </div>
               <div class="col-sm-4">
@@ -70,6 +70,7 @@
         </div>
       </div>
 	</div>
+
   
 </body>
 </html>

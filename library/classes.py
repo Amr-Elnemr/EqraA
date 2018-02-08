@@ -8,3 +8,9 @@ class BookDetail(object):
 		self.authorName = authorName
 		self.pic=bookPic
 		self.desc = desc
+
+class categorybooks(object):
+	"""docstring for categorybooks"""
+	def __init__(self, book):
+		self.book = book
+		

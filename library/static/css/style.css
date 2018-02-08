@@ -137,6 +137,7 @@
   right: 0;
   min-height: 70px;
 }
+
 /*style of the profile page*/
 .userDetailsBox{
 	width: 100%;
@@ -165,4 +166,11 @@
 .book_image{
 	width: 120px;
 	height: 180px;
+}
+.grid-books{
+	text-align: center;
+}
+
+.fa-star:hover{
+	color: black;
 }
