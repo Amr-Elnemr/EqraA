@@ -142,5 +142,15 @@
 }
 
 .fa-star:hover{
-	color: black;
+	color: black; 
+}
+
+.searchResDiv{
+	z-index: 3;
+	position: absolute;
+	background-color: #fff;
+}
+
+.res_type{
+	font-style: italic;
 }

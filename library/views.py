@@ -118,3 +118,19 @@ class UserFormView(View):
 					login(request, user)
 					return redirect('library:home')
 		return render(request, self.template_name, {'form':form})
+
+
+def search_all(request):
+	search_word = request.GET['k'] if request.GET['k'] != "0" else 0
+	if search_word:
+		books = Book.objects.filter(title__icontains=search_word)[:5]
+		authors = Author.objects.filter(full_name__icontains=search_word)[:5]
+		all_ids = ["book"+str(i.id) for i in books] + ["author"+str(i.id)for i in authors]
+		books = [{'title':i.title, 'id':i.id} for i in books]
+		authors = [{'full_name':i.full_name, 'id':i.id} for i in authors]
+		if books or authors:
+			return HttpResponse(json.dumps({'req_status':'ok', 'data':{'books':books, 'authors':authors, 'all_ids':all_ids}}))
+		else:
+			return HttpResponse(json.dumps({'req_status':'not_found'}))
+	else:
+		return HttpResponse(json.dumps({'req_status':'not_found'}))
