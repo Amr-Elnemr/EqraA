@@ -1,11 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
-from library.models import Book
-from library.models import Category
-from library.models import Read
-from library.models import Write
-from library.models import Author
+from library.models import Book, Category, Read, Write, Author
 from library.classes import BookDetail
 from django.db.models import Avg
 import json
@@ -85,3 +81,9 @@ def rate_apply(request, book_id):
 		Read.objects.create(user=user, book=book, rate=rate, status=status)
 		return HttpResponse(json.dumps({'req_status':'ok'}))
 
+#Author views
+from django.views import generic
+class show_author(generic.DetailView):
+	context_object_name="Author"
+	model=Author
+	template_name="library/Author_detail.html"
