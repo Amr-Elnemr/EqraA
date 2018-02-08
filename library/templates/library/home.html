@@ -1,0 +1,77 @@
+  {% extends "library/nav-template.html" %}
+{% load static %}
+{% block body %}
+<div class="container">
+
+	<div class="row">
+
+		 <div id="sidebar" class="col-2 top-rate-bar">
+      <h5 href="#" class="top-rate-tittle" >Top Rate</h5>
+        {% for t in topBooks %}
+        <div class="row">
+            <div href="#" class="list-item">
+              <div class="img-div">
+                <a href="#" class="img-anchor">
+                <img src="/media/{{ t.pic }}" style="width: 100%; height: 100%">
+              </a>
+              </div>
+              <div class="div-tittle">
+                <label class="book-tittle">{{ t.name }}</label><br>
+              </div>
+              <div class="div-author">
+                <label class="static-author">author: </label>
+                <a href="#" class="author">{{ t.authorName }}</a>
+              </div>
+            </div>
+            </div>
+        {% empty %}
+        <p>there is no top rate</p>
+        {% endfor %}
+        
+        </div>
+        <div class="col-7 books-div" id="board">
+          <h5 class="header">Books</h5>
+          {% for u in userBooks %}
+          <div class="row custom-row">
+              <div class="col-sm-3 img-div">
+                <a href="#" class="img-anchor">
+                <img src="/media/{{ u.pic }}" class="book-img" style="width: 100%; height: 100%">
+              </a>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <label class="static-author">tittle:&nbsp;</label>
+                  <a href="#" class="book-tittle-anchor">{{ u.name }}</a>
+                </div>
+                <div class="row">
+                  <label class="static-author">author:&nbsp;</label>
+                  <a href="#" class="book-tittle-anchor">{{ u.authorName }}</a>
+                </div>
+                <div class="row">
+                  <label class="static-author">desc:&nbsp;</label>
+                  <p href="#" class="book-tittle-anchor">{{ u.desc }}</p>
+                </div>
+              </div>
+          </div>
+           <hr>
+           {% empty %}
+        <p>sorry you don't have books</p>
+        {% endfor %}
+        </div><!--/span-->
+        <div id="sidebar" class="col-6 col-md-2">
+          <div class="list-group">
+            <h5 href="#" class="list-group-item side-active">favorite geners</h5>
+            {% for c in categories %}
+            <a href="#" class="list-group-item">{{ c.name }}</a>
+            {% empty %}
+            <p class="list-group-item">there is no categories</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+	</div>
+
+  
+</body>
+</html>
+{% endblock %}
