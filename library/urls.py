@@ -11,5 +11,7 @@ urlpatterns = [
     path('search/',views.search, name='search'),
     path('categories/',views.categories),
     path('author/<int:pk>/', views.show_author.as_view(), name='show_author'),
-    re_path(r'^register/$', views.UserFormView.as_view(), name='register')
+    re_path(r'^register/$', views.UserFormView.as_view(), name='register'),
+    re_path(r'^profile_page/$', views.ProfileView.as_view()),
+    re_path(r'^edit_profile/$', views.edit_profile),
 ]

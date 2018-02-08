@@ -8,7 +8,8 @@ from library.models import Book, Category, Read, Write, Author
 from library.classes import BookDetail
 from django.db.models import Avg
 import json
-
+from django.contrib.auth.models import User
+from .forms import EditProfile
 
 # Create your views here.
 
@@ -26,7 +27,7 @@ def home(request,Id):
 	yourbooks = Read.objects.filter(user_id = Id)
 	userBooks = []
 	for x in yourbooks:
-		global userBooks
+		# global userBooks
 		book=Book.objects.get(id = x.book_id)
 		wAuthor = Write.objects.get(book = book.id)
 		author = Author.objects.get(id = wAuthor.author.id)
@@ -134,3 +135,24 @@ def search_all(request):
 			return HttpResponse(json.dumps({'req_status':'not_found'}))
 	else:
 		return HttpResponse(json.dumps({'req_status':'not_found'}))
+
+class ProfileView(View):
+	def  get(self, request):
+		user = request.user
+		read_book = user.read_set.all()
+		books = [i.book for i in read_book]
+		status = [j.status for j in read_book]
+		# user = User.objects.filter(id=id)[0]
+		return render (request, 'library/profile_page.html', {'user': user, 'books': books, 'status': status})
+	
+def edit_profile(request):
+	if request.method=='POST':
+		form = EditProfile(request.POST)
+		if form.is_valid():
+			user = form.save(commit=false)
+			user.set_password(user.password)
+			form.save()
+			return HttpResponse("updated")
+	elif request.method=='GET':
+		form = EditProfile()
+		return render(request, 'library/edit_profile.html', {'form': form})
