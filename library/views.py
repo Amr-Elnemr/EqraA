@@ -50,7 +50,7 @@ def categories(request):
 	categories = Category.objects.all() 
 	books={}
 	for x in categories:
-		book_cat=x.book_set.all()[:4]
+		book_cat=x.book_set.all()[:5]
 		books[x.name]=book_cat
 	# 	books.append(book_cat)
 	return render(request,'library/categories.html',{"categories":categories,"books":books})
