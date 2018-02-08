@@ -35,11 +35,14 @@ def home(request,Id):
 		userBooks.append(bookdetail)
 	return render(request, 'library/home.html', {'categories': categories, 'topBooks':topBooks, 'userBooks':userBooks})
 
+
+#Book details
 def book(request, Id):
 	book = Book.objects.get(id = Id)
 	authors_books = book.write_set.all()
 	authors = [i.author for i in authors_books]
 	book_rate = book.read_set.aggregate(Avg('rate'))['rate__avg']
+	book_rate = round(book_rate, 2) if book_rate else 0
 	user_book = book.read_set.filter(user=request.user.id, book=book.id)
 	user_rate = user_book[0].rate if user_book else 0
 	user_status = user_book[0].status if user_book else 0
@@ -69,6 +72,8 @@ def search(request,q):
 		data ={"books":books}
 	HttpResponse("ghgujhjh")
 	
+
+#Book rate and status
 def rate_apply(request, book_id):
 	book = Book.objects.get(id=book_id)
 	user = request.user
