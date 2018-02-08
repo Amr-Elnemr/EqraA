@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.views.generic import View
+from library.forms import userform
 from django.http import HttpResponse
 from django.http import JsonResponse
 from library.models import Book, Category, Read, Write, Author
@@ -14,7 +17,7 @@ def home(request,Id):
 	topRate = Read.objects.filter().order_by('-rate')[:5]
 	topBooks = []
 	for x in topRate:
-		global topBooks
+		# global topBooks
 		book=Book.objects.get(id = x.book_id)
 		wAuthor = Write.objects.get(book = book.id)
 		author = Author.objects.get(id = wAuthor.author.id)
@@ -31,11 +34,14 @@ def home(request,Id):
 		userBooks.append(bookdetail)
 	return render(request, 'library/home.html', {'categories': categories, 'topBooks':topBooks, 'userBooks':userBooks})
 
+
+#Book details
 def book(request, Id):
 	book = Book.objects.get(id = Id)
 	authors_books = book.write_set.all()
 	authors = [i.author for i in authors_books]
-	book_rate = round(book.read_set.aggregate(Avg('rate'))['rate__avg'],2)
+	book_rate = book.read_set.aggregate(Avg('rate'))['rate__avg']
+	book_rate = round(book_rate, 2) if book_rate else 0
 	user_book = book.read_set.filter(user=request.user.id, book=book.id)
 	user_rate = user_book[0].rate if user_book else 0
 	user_status = user_book[0].status if user_book else 0
@@ -65,6 +71,8 @@ def search(request,q):
 		data ={"books":books}
 	HttpResponse("ghgujhjh")
 	
+
+#Book rate and status
 def rate_apply(request, book_id):
 	book = Book.objects.get(id=book_id)
 	user = request.user
@@ -87,3 +95,26 @@ class show_author(generic.DetailView):
 	context_object_name="Author"
 	model=Author
 	template_name="library/Author_detail.html"
+
+#Registarion Form:
+class UserFormView(View):
+	form_class=userform
+	template_name='library/registration.html'
+
+	def get(self, request):
+		form=self.form_class(request.POST)
+
+		if form.is_valid():
+			user=form.save(commit=False)
+			username=form.cleaned_data['username']
+			password=form.cleaned_data['password']
+			user.set_password(password)
+			user.save()
+
+			#Authentication:
+			user=authenticate(username=username, password=password)
+			if user is not None:
+				if user.is_active:
+					login(request, user)
+					return redirect('library:home')
+		return render(request, self.template_name, {'form':form})
