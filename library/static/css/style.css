@@ -144,3 +144,32 @@
 .fa-star:hover{
 	color: black;
 }
+
+.userDetailsBox{
+	width: 100%;
+	float: left;
+}
+#profilePic{
+	/*float: left;*/
+	width: 120px;
+	height: 180px;
+}
+#userName{
+	width: 400px;
+}
+#editProfile{
+	/*margin-left: 120px; */
+}
+
+.userDetailBox{
+	/*padding-left: 100px;*/
+}
+
+.book{
+	display: inline-block;
+}
+
+.book_image{
+	width: 120px;
+	height: 180px;
+}

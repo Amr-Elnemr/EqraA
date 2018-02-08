@@ -1,0 +1,11 @@
+{% extends "library/nav-template.html" %}
+{% load static %}
+{% block body %}
+<h2> Edit your Profile </h2>
+<form method=“POST”> {% csrf_token %}
+{{ form.as_p }}
+<input type="submit" name="submit" value="submit">
+</form>
+</body>
+</html>
+{% endblock %}
