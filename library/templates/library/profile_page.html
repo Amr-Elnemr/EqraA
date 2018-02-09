@@ -5,8 +5,14 @@
 <div class="container-fluid">
   <div class="userProfile row">
 
+    
     <div class="profilePicClass col-sm-2">
-      <img id="profilePic" src="images/profilePic.png">
+      <div>
+        <img id="profilePic" src="/media/{{ user.userprofile.pic }}">
+      </div>
+      <div>
+        <font size="2"><a href="/library/edit_profile_image">(update profile pic)</a></font>
+      </div>  
     </div>
 
 

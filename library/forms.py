@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
+from .models import User, UserProfile
 
 class userform(forms.ModelForm):
 	password= forms.CharField(widget=forms.PasswordInput, required=True)
@@ -33,3 +34,11 @@ class EditProfile(forms.ModelForm):
 	username = forms.CharField(label='username', max_length=50, widget=forms.TextInput(attrs={'placeholder': 'username','class':'form-control'}))
 	password = forms.CharField(label='Password', max_length=50, widget=forms.PasswordInput(attrs={'placeholder': 'enter your password','class':'form-control'}))
 	
+
+##########
+#edit profile image
+class UpdateProfileImage(forms.ModelForm):
+	class Meta:
+		model = UserProfile
+		fields = ['pic']
+	# profile_image = forms.ImageField(label='Profile Image', widget=forms.ClearableFileInput(attrs={'placeholder': 'upload your image','class':'form-control'}))
