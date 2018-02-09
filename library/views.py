@@ -229,10 +229,15 @@ def edit_profile(request):
 			user.username = form_data['username']
 			user.set_password(form_data['password'])
 			user.save()
+			user = authenticate(username=user.username, password=user.password)
+			login(request, user)
 			# userf = form.save(commit=False)
 			# user.set_password(userf.password)
 			# user=form.save()
-			return HttpResponse("updated")
+			return redirect('/library/profile_page')
+			# return HttpResponse("updated")
+		else:
+			return render(request, 'library/edit_profile.html', {'form': form})
 	elif request.method=='GET':
 		form = EditProfile()
 		return render(request, 'library/edit_profile.html', {'form': form})
@@ -262,24 +267,17 @@ def advanced_search(request):
 @login_required
 def update_profile_image(request):
 	if request.method=='POST':
-		form = UpdateProfileImage(request.POST)
+		form = UpdateProfileImage(request.POST, request.FILES)
 		if form.is_valid():
 			form_data=form.cleaned_data
-			user = request.user
-			userprofile = request.user
-			userprofile.user_id = user.id
+			userprofile = request.user.userprofile
 			userprofile.pic = form_data['pic']
 			userprofile.save()
-			# userprofile = request.user.userprofile
-			# form_data=form.cleaned_data
-			# #edit image
-			# userprofile.pic = form_data['pic']
-			# # userprofile.pic = form_data['profile_image']
-			# #edit image end
-			# userprofile.save()
-			# # return redirect('/library/profile_page')
-			return HttpResponse("updated")
+			return redirect('/library/profile_page')
+			# return HttpResponse("updated")
 	elif request.method=='GET':
 		form = UpdateProfileImage()
 		return render(request, 'library/edit_profile_image.html', {'form': form})
+
+
 
