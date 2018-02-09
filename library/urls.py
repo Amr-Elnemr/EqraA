@@ -13,7 +13,7 @@ urlpatterns = [
     re_path(r'^category/([0-9]+)/fav$', views.add_to_favorit, name="favorite_cat"),
     path('home/',views.home, name='home'),
     path('search/',views.search, name='search'),
-    path('categories/',views.categories),
+    path('category/',views.categories, name='categories'),
     path('author/<int:pk>/', login_required(views.show_author.as_view()), name='show_author'),
 
     re_path(r'^register/$', views.UserFormView.as_view(), name='register'),
