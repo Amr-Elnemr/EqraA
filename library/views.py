@@ -10,6 +10,9 @@ import json
 from django.contrib.auth.models import User
 from .forms import EditProfile
 
+from .forms import UpdateProfileImage
+from .models import UserProfile
+
 # Create your views here.
 
 def home(request,Id):
@@ -219,3 +222,29 @@ def advanced_search(request):
             return render (request, 'library/search.html', {'data':{'books':[], 'authors':[]}})
     else:
         return render (request, 'library/search.html', {'data':{'books':[], 'authors':[]}})
+
+
+
+####update profile image
+def update_profile_image(request):
+	if request.method=='POST':
+		form = UpdateProfileImage(request.POST)
+		if form.is_valid():
+			form_data=form.cleaned_data
+			user = request.user
+			userprofile = request.user
+			userprofile.user_id = user.id
+			userprofile.pic = form_data['pic']
+			userprofile.save()
+			# userprofile = request.user.userprofile
+			# form_data=form.cleaned_data
+			# #edit image
+			# userprofile.pic = form_data['pic']
+			# # userprofile.pic = form_data['profile_image']
+			# #edit image end
+			# userprofile.save()
+			# # return redirect('/library/profile_page')
+			return HttpResponse("updated")
+	elif request.method=='GET':
+		form = UpdateProfileImage()
+		return render(request, 'library/edit_profile_image.html', {'form': form})
