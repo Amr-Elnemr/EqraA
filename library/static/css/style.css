@@ -203,3 +203,18 @@
 	position: relative;
 	z-index: -2;
 }
+
+
+#signout{
+	background: #008080;
+	color: white;
+	border: none;
+	font-size: 21px;
+	position: relative;
+	left: 620%;
+}
+
+#signout:hover{
+	color:#DCDCDC;
+	cursor: pointer;
+}

@@ -1,13 +1,22 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import User
 
 class userform(forms.ModelForm):
-    password=forms.CharField(widget=forms.PasswordInput)
+	password= forms.CharField(widget=forms.PasswordInput, required=True)
+	email=forms.EmailField(widget=forms.EmailInput, required=True)
 
-    class Meta:
-        model=User
-        fields=['username', 'email', 'password']
+	class Meta:
+		model=User
+		fields=['username', 'email', 'password']
+
+###########
+class loginform(forms.ModelForm):
+	password= forms.CharField(widget=forms.PasswordInput, required=True)
+	email=forms.EmailField(widget=forms.EmailInput, required=True)
+
+	class Meta:
+		model=User
+		fields=['username', 'password']
 
 ###########
 
