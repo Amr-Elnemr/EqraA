@@ -4,15 +4,13 @@ from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from library.forms import userform, loginform
 from django.http import HttpResponse, JsonResponse
-from library.models import Book, Category, Read, Write, Author
+from library.models import Book, Category, Read, Write, Author, UserProfile
 from library.classes import BookDetail
 from django.db.models import Avg
 import json
 from django.contrib.auth.models import User
 from .forms import EditProfile
 from .forms import UpdateProfileImage
-from .models import UserProfile
-
 # Create your views here.
 
 def home(request):
