@@ -4,17 +4,17 @@ from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from library.forms import userform, loginform
 from django.http import HttpResponse, JsonResponse
-from library.models import Book, Category, Read, Write, Author
+from library.models import Book, Category, Read, Write, Author, UserProfile
 from library.classes import BookDetail
 from django.db.models import Avg
 import json
 from django.contrib.auth.models import User
 from .forms import EditProfile
 from .forms import UpdateProfileImage
-from .models import UserProfile
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def home(request):
 	user = request.user
 	categories = user.category_set.all()
@@ -40,6 +40,7 @@ def home(request):
 
 
 #Book details
+@login_required
 def book(request, Id):
 	book = Book.objects.get(id = Id)
 	authors_books = book.write_set.all()
@@ -51,13 +52,14 @@ def book(request, Id):
 	user_status = user_book[0].status if user_book else 0
 	return render(request, 'library/Book.html', {"book":book, "authors":authors, "book_rate": book_rate, "user_rate": user_rate, 'user_status':user_status})
 	
-
+@login_required
 def categories(request):
 	categories = Category.objects.all()
 	user = request.user
 	favCategories =  user.category_set.all()
 	return render(request,'library/categories.html',{"categories":categories,"favCategories":favCategories})
-	
+
+@login_required
 def search(request,q):
 	query = request.GET.get("search",None)
 	matchBooks = Book.objects.filter(title = query)
@@ -74,6 +76,7 @@ def search(request,q):
 	
 
 #Book rate and status
+@login_required
 def rate_apply(request, book_id):
 	book = Book.objects.get(id=book_id)
 	user = request.user
@@ -91,6 +94,7 @@ def rate_apply(request, book_id):
 		return HttpResponse(json.dumps({'req_status':'ok'}))
 
 
+@login_required
 def category(request,Id):
 	category = Category.objects.get(id = Id)
 	catBooks = []
@@ -110,7 +114,7 @@ def category(request,Id):
 	
 	return render(request,'library/category.html',{"category":category,"catBooks":catBooks,"fav":fav})
 
-
+@login_required
 def add_to_favorit(request,cat_id):
 	category = Category.objects.get(id = cat_id)
 	user = request.user
@@ -162,7 +166,7 @@ class UserFormView(View):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return redirect('library:home',user.id)
+				return redirect('library:home')
 		return render(request, self.template_name, {'error':errMsg})
 
 #Login Form:
@@ -184,14 +188,14 @@ class loginform(View):
 		if loggedUser is not None:
 			if loggedUser.is_active:
 				login(request, loggedUser)
-				return redirect('library:home',loggedUser.id)
+				return redirect('library:home')
 		return render(request, self.template_name, {'error':LogerrMsg})
 
 ###########################################
 
 
 
-
+@login_required
 def search_all(request):
 	search_word = request.GET['k'] if request.GET['k'] != "0" else 0
 	if search_word:
@@ -207,6 +211,7 @@ def search_all(request):
 	else:
 		return HttpResponse(json.dumps({'req_status':'not_found'}))
 
+
 class ProfileView(View):
 	def  get(self, request):
 		user = request.user
@@ -215,7 +220,8 @@ class ProfileView(View):
 		status = [j.status for j in read_book]
 		# user = User.objects.filter(id=id)[0]
 		return render (request, 'library/profile_page.html', {'user': user, 'books': books, 'status': status})
-	
+
+@login_required	
 def edit_profile(request):
 	if request.method=='POST':
 		form = EditProfile(request.POST)
@@ -224,13 +230,21 @@ def edit_profile(request):
 			form_data=form.cleaned_data
 			user.first_name = form_data['first_name']
 			user.last_name = form_data['last_name']
-			user.username = form_data['username']
+			if user.username == form_data['username']:
+				user.username = user.username
+			else:
+				user.username = form_data['username']
 			user.set_password(form_data['password'])
 			user.save()
+			user = authenticate(username=user.username, password=user.password)
+			login(request, user)
 			# userf = form.save(commit=False)
 			# user.set_password(userf.password)
 			# user=form.save()
-			return HttpResponse("updated")
+			return redirect('/library/profile_page')
+			# return HttpResponse("updated")
+		else:
+			return render(request, 'library/edit_profile.html', {'form': form})
 	elif request.method=='GET':
 		form = EditProfile()
 		return render(request, 'library/edit_profile.html', {'form': form})
@@ -239,7 +253,7 @@ def edit_profile(request):
 
 
 
-
+@login_required
 def advanced_search(request):
     search_word = request.GET['k'] if 'k' in request.GET.keys() else 0
     if search_word:
@@ -257,6 +271,7 @@ def advanced_search(request):
 
 
 ####update profile image
+@login_required
 def update_profile_image(request):
 	if request.method=='POST':
 		form = UpdateProfileImage(request.POST, request.FILES)
@@ -270,4 +285,6 @@ def update_profile_image(request):
 	elif request.method=='GET':
 		form = UpdateProfileImage()
 		return render(request, 'library/edit_profile_image.html', {'form': form})
+
+
 

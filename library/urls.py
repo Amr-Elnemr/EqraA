@@ -1,5 +1,6 @@
 from django.urls import path, re_path
 from . import views
+from django.contrib.auth.decorators import login_required
 
 app_name = 'library'
 
@@ -13,12 +14,12 @@ urlpatterns = [
     path('home/',views.home, name='home'),
     path('search/',views.search, name='search'),
     path('categories/',views.categories),
-    path('author/<int:pk>/', views.show_author.as_view(), name='show_author'),
+    path('author/<int:pk>/', login_required(views.show_author.as_view()), name='show_author'),
 
     re_path(r'^register/$', views.UserFormView.as_view(), name='register'),
     re_path(r'^login/$', views.loginform.as_view(), name='login'),
     
-    re_path(r'^profile_page/$', views.ProfileView.as_view(), name='profile'),
+    re_path(r'^profile_page/$', login_required(views.ProfileView.as_view()), name='profile'),
     re_path(r'^edit_profile/$', views.edit_profile),
     re_path(r'^edit_profile_image/$', views.update_profile_image),
 
