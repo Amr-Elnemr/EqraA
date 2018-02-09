@@ -45,9 +45,8 @@ var populateSearchRes = function (resType, dataArr, allIds){
 }
 
 
-function ajaxSuccess () {
+var ajaxSuccessSearch = function () {
 	var response = JSON.parse(this.responseText)
-	console.log(response)
 		if (response['req_status']=="ok") {
 			searchResDiv.style.display = 'block'
 			var books = response['data']['books']
@@ -68,19 +67,18 @@ function ajaxSuccess () {
 		}
 }
 
-var ajaxReruest = function (input) {
+var ajaxRequestSearch = function (input) {
 	var oReq = new XMLHttpRequest();
 	advancedSearch.href = currentURL + `advanced_search?k=${input}`
-	oReq.onload = ajaxSuccess;
-	console.log(currentURL+`search?k=${input}`)
+	oReq.onload = ajaxSuccessSearch;
 	oReq.open("get", currentURL+`search?k=${input}`);
 	oReq.send();
 }
 
 
-searchFun = function (e) {
+var searchFun = function (e) {
 	if(e.target.value){
-		ajaxReruest(e.target.value)
+		ajaxRequestSearch(e.target.value)
 	}
 	else {
 		delOthers(searchResDiv, [1])

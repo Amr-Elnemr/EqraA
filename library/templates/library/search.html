@@ -1,68 +1,37 @@
+{% extends "library/nav-template.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Search ...</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
-  <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
-</head>
-<body>
+{% block body %}
 
-<nav class="navbar navbar-expand-sm">
-  <!-- Brand/logo -->
-  <a class="navbar-brand" href="#">
-    <a class="navbar-brand" href="#">EqraA</a>
-    <img src="/media/images/rlogo.png" alt="logo" style="width:40px;">
-  </a>
-  
-  <!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="#">Home</a>
-    </li>
-
-    <li class="nav-item">
-      <img src="/media/images/user.png" alt="logo" style="width:40px;">
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">My profile</a>
-    </li>
-
-    </li>
-    <li class="nav-item">
-      <img src="/media/images/genres.png" alt="logo" style="width:40px;">
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Genres</a>
-    </li>
-  </ul>
-
-
-</nav>
 <!-- Body -->
-<div class="row">
+<div class="row m-1">
+  <!-- search options !-->
+  <div class="col-sm-2">
 
-  <div class="col-sm-3">
+    <div id="select-res-type" class="mt-5 ml-5">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="books-only" checked >
+        <label class="custom-control-label" for="books-only">Books</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="authors-only" checked >
+        <label class="custom-control-label" for="authors-only">Authors</label>
+      </div>      
+    </div>
 
   </div>
-  <div class="col-sm-6">
+
+
+  <div class="col-sm-10">
     
-    <form method="get" class="form-inline" action="" id="searchInput">
-      <input name="k" class="form-control" type="text" placeholder="Search books" required>
-      <button class="btn btn-success" type="submit">Search</button>
-    </form>
-
-
     <div class="searchResDiv border border-success rounded" id="searchResDiv" style="display:none;">
       <a class="dropdown-item" href="" style="display:none;"><span class="res_type"></span><span></span></a>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" id="advancedSearch" href="#">View more</a>
     </div>
 
+  <div id="books-only-div">
     {% if data.books %}
       {% for book in data.books %}
-        
         <a id="book{{ book.id }}" href={% url "library:book" book.id %}>
           <div class="res-div m-4" >
             <div class="res-img">
@@ -73,7 +42,10 @@
         </a>
       {% endfor %}
     {% endif %}
+  </div>
 
+  <div id="authors-only-div">
+    
     {% if data.authors %}
       {% for author in data.authors %}
         
@@ -87,16 +59,20 @@
         </a>
       {% endfor %}
     {% endif %}
+  </div>
     {% if not data.books and not data.authors %}
         <span class="res_type">No books or authors found!</span>
     {% endif %}
 
   </div>
-  <div class="col-sm-3"></div>
+  
+  {# <div class="col-sm-3"></div> #}
 
 </div>
 
   <script src="{% static "js/search.js" %}"></script>
+  <script src="{% static "js/advanced_search.js" %}"></script>
 
 </body>
 </html>
+{% endblock %}
