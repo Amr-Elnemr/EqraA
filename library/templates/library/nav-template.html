@@ -16,7 +16,6 @@
   function searchFun() {
     var search = document.getElementById('searchInput')
     var searchBoard = document.getElementById('board')
-    /*location.href = '{%url 'lib:home' Id=1 %}';*/
     var xhr = new XMLHttpRequest();
     
   }
@@ -24,7 +23,9 @@
   
 </script>
 {% endblock %}
+{% block title%}
   <title>home</title>
+{% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-expand-sm">
@@ -56,7 +57,7 @@
     </li>
   </ul>
 
-  <form class="form-inline" action="{%url 'lib:home' Id=1 %}" method="get">
+  <form class="form-inline" action="{%url 'lib:home' %}" method="get">
     <input class="form-control" type="text" id="searchInput" placeholder="Search books" oninput="searchFun()" name="search">
     <button class="btn btn-success" type="submit">Search</button>
   </form>

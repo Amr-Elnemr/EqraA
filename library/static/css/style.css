@@ -3,6 +3,16 @@
     border-color: black;
 }
 
+.favorit {
+	background-color: #008080;
+
+}
+#favorit-botton{
+	background-color: #008080;
+	width: 20%;
+	align-self: right;
+}
+
 .navbar-brand{
 	font-size: 30px;
 	font-family: serif;
@@ -14,6 +24,10 @@
 	color:white;
 }
 
+#div-category{
+	padding-left: 50px;
+	margin-right: 100px;
+}
 
 .navbar-brand:hover{
 	color: white;

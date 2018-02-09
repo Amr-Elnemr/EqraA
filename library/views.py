@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
-from library.models import Book, Category, Read, Write, Author
+from library.models import Book, Category, Read, Write, Author , User
 from library.classes import BookDetail
 from django.db.models import Avg
 import json
@@ -9,25 +9,26 @@ import json
 
 # Create your views here.
 
-def home(request,Id):
-	categories = Category.objects.all()
+def home(request):
+	user = request.user
+	categories = user.category_set.all()
 	topRate = Read.objects.filter().order_by('-rate')[:5]
 	topBooks = []
 	for x in topRate:
 		global topBooks
 		book=Book.objects.get(id = x.book_id)
-		wAuthor = Write.objects.get(book = book.id)
-		author = Author.objects.get(id = wAuthor.author.id)
-		bookdetail =BookDetail(book.id,book.title,author.id,author.full_name,book.pic,book.summary)
+		authors_books = book.write_set.all()
+		authors = [i.author for i in authors_books]
+		bookdetail =BookDetail(book.id,book.title,authors,book.pic,book.summary)
 		topBooks.append(bookdetail)
-	yourbooks = Read.objects.filter(user_id = Id)
+	yourbooks = user.read_set.all()
 	userBooks = []
 	for x in yourbooks:
 		global userBooks
 		book=Book.objects.get(id = x.book_id)
-		wAuthor = Write.objects.get(book = book.id)
-		author = Author.objects.get(id = wAuthor.author.id)
-		bookdetail =BookDetail(book.id,book.title,author.id,author.full_name,book.pic,book.summary)
+		authors_books = book.write_set.all()
+		authors = [i.author for i in authors_books]
+		bookdetail =BookDetail(book.id,book.title,authors,book.pic,book.summary)
 		userBooks.append(bookdetail)
 	return render(request, 'library/home.html', {'categories': categories, 'topBooks':topBooks, 'userBooks':userBooks})
 
@@ -43,13 +44,10 @@ def book(request, Id):
 	
 
 def categories(request):
-	categories = Category.objects.all() 
-	books={}
-	for x in categories:
-		book_cat=x.book_set.all()[:5]
-		books[x.name]=book_cat
-	# 	books.append(book_cat)
-	return render(request,'library/categories.html',{"categories":categories,"books":books})
+	categories = Category.objects.all()
+	user = request.user
+	favCategories =  user.category_set.all()
+	return render(request,'library/categories.html',{"categories":categories,"favCategories":favCategories})
 	
 def search(request,q):
 	query = request.GET.get("search",None)
@@ -81,9 +79,42 @@ def rate_apply(request, book_id):
 		Read.objects.create(user=user, book=book, rate=rate, status=status)
 		return HttpResponse(json.dumps({'req_status':'ok'}))
 
+
+def category(request,Id):
+	category = Category.objects.get(id = Id)
+	catBooks = []
+	books = category.book_set.all()
+	for x in books:
+		book=Book.objects.get(id = x.id)
+		wAuthor = Write.objects.filter(book = book.id)
+		authors = []
+		for a in wAuthor:
+			author = Author.objects.get(id = a.author.id)
+			authors.append(author)
+		# authors = book.author_set.all()
+		bookdetail =BookDetail(book.id,book.title,authors,book.pic,book.summary)
+		catBooks.append(bookdetail)
+	
+	return render(request,'library/category.html',{"category":category,"catBooks":catBooks})
+
+
+def add_to_favorit(request,cat_id):
+	category = Category.objects.get(id = cat_id)
+	user = request.user
+	cat_users = category.user.all()
+	if user in cat_users:
+		category.user.remove(user)
+	else:
+		category.user.add(user)
+
+	return HttpResponse(json.dumps({'status':'ok'}))
+
 #Author views
 from django.views import generic
 class show_author(generic.DetailView):
 	context_object_name="Author"
 	model=Author
 	template_name="library/Author_detail.html"
+
+
+

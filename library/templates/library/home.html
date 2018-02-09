@@ -11,16 +11,18 @@
         <div class="row">
             <div href="#" class="list-item">
               <div class="img-div">
-                <a href="#" class="img-anchor">
+                <a href="/library/book/{{t.id}}" class="img-anchor">
                 <img src="/media/{{ t.pic }}" style="width: 100%; height: 100%">
               </a>
               </div>
               <div class="div-tittle">
-                <label class="book-tittle">{{ t.name }}</label><br>
+                <label href="/library/book/{{t.id}}" class="book-tittle">{{ t.name }}</label><br>
               </div>
               <div class="div-author">
-                <label class="static-author">author: </label>
-                <a href="#" class="author">{{ t.authorName }}</a>
+                <label class="static-author">by: </label>
+                {% for a in t.authors %}
+                  <a href="/library/author/{{a.id}}" class="book-tittle-anchor">{{ a.full_name }}&nbsp;</a>
+                  {% endfor %}
               </div>
             </div>
             </div>
@@ -34,22 +36,23 @@
           {% for u in userBooks %}
           <div class="row custom-row">
               <div class="col-sm-3 img-div">
-                <a href="#" class="img-anchor">
+                <a href="/library/book/{{u.id}}" class="img-anchor">
                 <img src="/media/{{ u.pic }}" class="book-img" style="width: 100%; height: 100%">
               </a>
               </div>
               <div class="col-sm-4">
                 <div class="row">
                   <label class="static-author">tittle:&nbsp;</label>
-                  <a href="#" class="book-tittle-anchor">{{ u.name }}</a>
+                  <a href="/library/book/{{u.id}}" class="book-tittle-anchor">{{ u.name }}</a>
                 </div>
                 <div class="row">
                   <label class="static-author">author:&nbsp;</label>
-                  <a href="#" class="book-tittle-anchor">{{ u.authorName }}</a>
-                </div>
+                  {% for a in u.authors %}
+                  <a href="/library/author/{{a.id}}" class="book-tittle-anchor">{{ a.full_name }}&nbsp;</a>
+                  {% endfor %}                </div>
                 <div class="row">
                   <label class="static-author">desc:&nbsp;</label>
-                  <p href="#" class="book-tittle-anchor">{{ u.desc }}</p>
+                  <p class="book-tittle-anchor">{{ u.desc }}</p>
                 </div>
               </div>
           </div>
@@ -60,9 +63,9 @@
         </div><!--/span-->
         <div id="sidebar" class="col-6 col-md-2">
           <div class="list-group">
-            <h5 href="#" class="list-group-item side-active">favorite geners</h5>
+            <h5 class="list-group-item side-active">favorite geners</h5>
             {% for c in categories %}
-            <a href="#" class="list-group-item">{{ c.name }}</a>
+            <a href="/library/category/{{c.id}}" class="list-group-item">{{ c.name }}</a>
             {% empty %}
             <p class="list-group-item">there is no categories</p>
             {% endfor %}

@@ -1,16 +1,12 @@
 class BookDetail(object):
 	"""docstring for BookDetail"""
-	def __init__(self, Id,name,authorId,authorName,bookPic,desc):
+	def __init__(self, Id,name,authors,bookPic,desc):
 		super(BookDetail, self).__init__()
 		self.id = Id
 		self.name = name
-		self.authorId = authorId
-		self.authorName = authorName
+		self.authors = authors
 		self.pic=bookPic
 		self.desc = desc
 
-class categorybooks(object):
-	"""docstring for categorybooks"""
-	def __init__(self, book):
-		self.book = book
+
 		
