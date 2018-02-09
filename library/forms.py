@@ -19,7 +19,8 @@ class EditProfile(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ['first_name','last_name','password','username']
-	first_name = forms.CharField(label='First Name', max_length=50)
-	last_name = forms.CharField(label='Last Name', max_length=50)
-	password = forms.CharField(label='Password', max_length=50, widget=forms.PasswordInput)
-	username = forms.CharField(label='Last Name', max_length=50)
+	first_name = forms.CharField(label='First Name', max_length=50, widget=forms.TextInput(attrs={'placeholder': 'First Name','class':'form-control'}))
+	last_name = forms.CharField(label='Last Name', max_length=50, widget=forms.TextInput(attrs={'placeholder': 'last Name','class':'form-control'}))
+	username = forms.CharField(label='username', max_length=50, widget=forms.TextInput(attrs={'placeholder': 'username','class':'form-control'}))
+	password = forms.CharField(label='Password', max_length=50, widget=forms.PasswordInput(attrs={'placeholder': 'enter your password','class':'form-control'}))
+	

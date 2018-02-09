@@ -149,15 +149,20 @@ def edit_profile(request):
 	if request.method=='POST':
 		form = EditProfile(request.POST)
 		if form.is_valid():
-			user = form.save(commit=false)
-			user.set_password(user.password)
-			form.save()
+			user = request.user
+			form_data=form.cleaned_data
+			user.first_name = form_data['first_name']
+			user.last_name = form_data['last_name']
+			user.username = form_data['username']
+			user.set_password(form_data['password'])
+			user.save()
+			# userf = form.save(commit=False)
+			# user.set_password(userf.password)
+			# user=form.save()
 			return HttpResponse("updated")
 	elif request.method=='GET':
 		form = EditProfile()
 		return render(request, 'library/edit_profile.html', {'form': form})
-
-
 
 
 
