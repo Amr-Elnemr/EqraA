@@ -1,3 +1,4 @@
+
 document.getElementById("star1").addEventListener("click", function(){rate(1)})
 document.getElementById("star2").addEventListener("click", function(){rate(2)})
 document.getElementById("star3").addEventListener("click", function(){rate(3)})
@@ -11,7 +12,6 @@ function rate(i)
     document.getElementById("star"+j).className="fa fa-star";
   }
 
-  document.getElementById("myrating").textContent="My rating ("+i+"/5)"
 
   while(i>0)
   {
@@ -19,4 +19,31 @@ function rate(i)
     i--
   }
 }
-        
+var myRatingDiv = document.getElementById('myrating-div')
+var statusDiv = document.getElementById('status')
+
+function ajaxSuccess () {
+  var response = JSON.parse(this.responseText)
+  console.log(response)
+}
+
+var ajaxReruest = function (rate, status) {
+  var oReq = new XMLHttpRequest()
+  var currentURL = window.location.href
+  oReq.onload = ajaxSuccess
+  oReq.open("get", currentURL+`edit?rate=${rate}&status=${status}`)
+  oReq.send();
+}
+
+myRatingDiv.addEventListener("click", function (e) {
+    starNum = e.target.id.substring(4)
+    if(e.target.id.substring(0, 4)=='star'){
+      ajaxReruest(starNum, 0)
+    }
+
+})
+
+statusDiv.addEventListener('change', function (e) {
+  ajaxReruest(0, this.value)
+})
+   

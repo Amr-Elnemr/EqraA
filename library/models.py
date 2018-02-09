@@ -41,3 +41,11 @@ class Read(models.Model):
 class Write(models.Model):
 	author = models.ForeignKey(Author, on_delete=models.CASCADE)
 	book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+#extend class user
+class UserProfile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	pic = models.ImageField(upload_to = 'user', blank=True)
+	
+	def __str__(self):
+		return self.user.username

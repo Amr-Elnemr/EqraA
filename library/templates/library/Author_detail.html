@@ -47,19 +47,19 @@
   	<h5 class="subtitles">See Also for this Author: </h5>
 
   	{% if Author.write_set.all.0.book.id %}
-  		<div><img id="other-books" src="/media/{{ book.pic }}"></div>
+  		<div><img id="other-books" src="/media/{{ Author.write_set.all.0.book.pic }}"></div>
 	  	<a href="{% url 'library:book' Author.write_set.all.0.book.id %}">
 	  	{{ Author.write_set.all.0.book.title }}</a>
 	{% endif %}
 
 	{% if Author.write_set.all.1.book.id %}
-	  	<div><img id="other-books" src="/media/{{ book.pic }}"></div>
+	  	<div><img id="other-books" src="/media/{{ Author.write_set.all.1.book.pic }}"></div>
 	  	<a href="{% url 'library:book' Author.write_set.all.1.book.id %}">
 	  	{{ Author.write_set.all.1.book.title }}</a>
   	{% endif %}
 
   	{% if Author.write_set.all.2.book.id %}
-	  	<div><img id="other-books" src="/media/{{ book.pic }}"></div>
+	  	<div><img id="other-books" src="/media/{{ Author.write_set.all.2.book.pic }}"></div>
 	  	<a href="{% url 'library:book' Author.write_set.all.2.book.id %}">
 	  	{{ Author.write_set.all.2.book.title }}</a>
   	{% endif %}
