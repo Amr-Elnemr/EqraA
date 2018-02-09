@@ -103,9 +103,9 @@ def add_to_favorit(request,cat_id):
 	user = request.user
 	cat_users = category.user.all()
 	if user in cat_users:
-		category.user.remove(user)
+		user.category_set.remove(user)
 	else:
-		category.user.add(user)
+		user.category_set.add(user)
 
 	return HttpResponse(json.dumps({'status':'ok'}))
 
