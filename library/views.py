@@ -284,8 +284,9 @@ def update_profile_image(request):
 
 
 
-@ogin_required
+@login_required
 def delete_me(request):
-	user = request.user
-	user.delete()
-	return redirect('/library/regisration')
+    user = request.user
+    user = User.objects.get(id = user.id)
+    user.delete()
+    return redirect('/library/login')
