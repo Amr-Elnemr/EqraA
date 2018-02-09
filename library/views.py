@@ -138,58 +138,64 @@ class show_author(generic.DetailView):
 #Registarion Form:
 errMsg="!One or more entries are not valid, please try again."
 class UserFormView(View):
-	form_class=userform
-	template_name='library/registration.html'
+    form_class=userform
+    template_name='library/registration.html'
 
-	def get(self, request):
-		form = self.form_class(None)
-		return render(request, self.template_name, {'form': form})
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('library:home')
 
-	def post(self, request):
-		form = self.form_class(request.POST)
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
 
-		# check non existance:
-		if User.objects.filter(username=form.data['username']).exists():
-			inMsg='sorry but this username is already taken'
-			return render(request, self.template_name, {'error': inMsg})
-		if form.is_valid():
-			user=form.save(commit=False)
-			username=form.cleaned_data['username']
-			password=form.cleaned_data['password']
-			user.set_password(password)
-			user.save()
-		else:
-			return render(request, self.template_name, {'error':errMsg})
+    def post(self, request):
+    	form = self.form_class(request.POST)
 
-		# Authentication:
-		user=authenticate(username=username, password=password)
-		if user is not None:
-			if user.is_active:
-				login(request, user)
-				return redirect('library:home')
-		return render(request, self.template_name, {'error':errMsg})
+    	# check non existance:
+    	if User.objects.filter(username=form.data['username']).exists():
+    		inMsg='sorry but this username is already taken'
+    		return render(request, self.template_name, {'error': inMsg})
+    	if form.is_valid():
+    		user=form.save(commit=False)
+    		username=form.cleaned_data['username']
+    		password=form.cleaned_data['password']
+    		user.set_password(password)
+    		user.save()
+    	else:
+    		return render(request, self.template_name, {'error':errMsg})
+
+    	# Authentication:
+    	user=authenticate(username=username, password=password)
+    	if user is not None:
+    		if user.is_active:
+    			login(request, user)
+    			return redirect('library:home')
+    	return render(request, self.template_name, {'error':errMsg})
 
 #Login Form:
 LogerrMsg='Sorry, but your username or password is incorrect.'
 class loginform(View):
-	form_class=loginform
-	template_name='library/login.html'
+    form_class=loginform
+    template_name='library/login.html'
 
-	def get(self, request):
-		form = self.form_class(None)
-		return render(request, self.template_name, {'form': form})
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('library:home')
+            
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
 
-	def post(self, request):
-		form = self.form_class(request.POST)
-		username=form.data['username']
-		password=form.data['password']
-		# check authentication:
-		loggedUser = authenticate(username=username, password=password)
-		if loggedUser is not None:
-			if loggedUser.is_active:
-				login(request, loggedUser)
-				return redirect('library:home')
-		return render(request, self.template_name, {'error':LogerrMsg})
+    def post(self, request):
+        form = self.form_class(request.POST)
+        username=form.data['username']
+        password=form.data['password']
+        # check authentication:
+        loggedUser = authenticate(username=username, password=password)
+        if loggedUser is not None:
+        	if loggedUser.is_active:
+        		login(request, loggedUser)
+        		return redirect('library:home')
+        return render(request, self.template_name, {'error':LogerrMsg})
 
 ###########################################
 
