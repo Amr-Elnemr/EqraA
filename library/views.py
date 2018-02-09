@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
-from library.forms import userform
-from django.http import HttpResponse
-from django.http import JsonResponse
+from library.forms import userform, loginform
+from django.http import HttpResponse, JsonResponse
 from library.models import Book, Category, Read, Write, Author
 from library.classes import BookDetail
 from django.db.models import Avg
@@ -97,28 +96,66 @@ class show_author(generic.DetailView):
 	model=Author
 	template_name="library/Author_detail.html"
 
+
 #Registarion Form:
+errMsg="!One or more entries are not valid, please try again."
 class UserFormView(View):
 	form_class=userform
 	template_name='library/registration.html'
 
 	def get(self, request):
-		form=self.form_class(request.POST)
+		form = self.form_class(None)
+		return render(request, self.template_name, {'form': form})
 
+	def post(self, request):
+		form = self.form_class(request.POST)
+
+		# check non existance:
+		if User.objects.filter(username=form.data['username']).exists():
+			inMsg='sorry but this username is already taken'
+			return render(request, self.template_name, {'error': inMsg})
 		if form.is_valid():
 			user=form.save(commit=False)
 			username=form.cleaned_data['username']
 			password=form.cleaned_data['password']
 			user.set_password(password)
 			user.save()
+		else:
+			return render(request, self.template_name, {'error':errMsg})
 
-			#Authentication:
-			user=authenticate(username=username, password=password)
-			if user is not None:
-				if user.is_active:
-					login(request, user)
-					return redirect('library:home')
-		return render(request, self.template_name, {'form':form})
+		# Authentication:
+		user=authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				return redirect('library:home',user.id)
+		return render(request, self.template_name, {'error':errMsg})
+
+#Login Form:
+LogerrMsg='Sorry, but your username or password is incorrect.'
+class loginform(View):
+	form_class=loginform
+	template_name='library/login.html'
+
+	def get(self, request):
+		form = self.form_class(None)
+		return render(request, self.template_name, {'form': form})
+
+	def post(self, request):
+		form = self.form_class(request.POST)
+		username=form.data['username']
+		password=form.data['password']
+		# check authentication:
+		loggedUser = authenticate(username=username, password=password)
+		if loggedUser is not None:
+			if loggedUser.is_active:
+				login(request, loggedUser)
+				return redirect('library:home',loggedUser.id)
+		return render(request, self.template_name, {'error':LogerrMsg})
+
+###########################################
+
+
 
 
 def search_all(request):

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Registration Form</title>
+  <title>Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -12,23 +12,16 @@
 <body>
 
 <div class="container">
-
+  
   <img src={% static "images/pp.png" %}>
   <h1>Welcome<h1>
-  <h2>Create an Account<h2>
-  <form method="post" novalidate>
-    {% csrf_token %}
-     <!-- {{form.as_p}} -->
-    <!-- <button type="submit">login</button> -->
+  <h2>Sign in<h2>
+  <form method="post" >
+  	{% csrf_token %}
 
     <div class="input-group">
       <span class="input-group-addon">Username</span>
       <input id="msg" type="text" class="form-control" name="username" placeholder="Username" required>
-    </div><br>
-
-    <div class="input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-      <input id="email" type="text" class="form-control" name="email" placeholder="Email" required> 
     </div><br>
 
     <div class="input-group">
@@ -38,10 +31,10 @@
     <br>
 
     <button type="submit" class="btn btn-default">Submit</button>
-    <span style="color: red; font-size: 15px;">{{error}}</span>
-  </form>
+    <div><a href="{% url 'library:register' %}">New to EqraA, Signup NOW</a></div>
 
-  <div><a href="{% url 'library:login' %}">Already a member</a></div>
+    <span style="color: red; font-size: 15px;">{{error}}</span>
+	</form>
 
 </div>
 
