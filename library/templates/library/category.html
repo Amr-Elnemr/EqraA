@@ -11,7 +11,8 @@
     </div>
     <div class="col-7"></div>
     <div class="col-1">
-    <a href="/library/category/{{category.id}}/fav" class="btn btn-xs btn-success favorit" id="fav-btn">favorit<span class="glyphicon glyphicon-heart"></span></a>
+    <button class="btn btn-success" id="fav-btn" type="submit">favorit</button>
+    <input type="text" id="fav" hidden="hidden" value="{{ fav }}">
     </div>
   </div>
   <div class="col-9 books-div">
@@ -48,10 +49,22 @@
 
 <script type="text/javascript">
   var btn = document.getElementById('fav-btn')
+  {% if fav %}
+      btn.style.backgroundColor= "#008080";
+      btn.textContent= "unfavor"
+  {% endif %}
 
   function ajaxSuccess () {
       var response = JSON.parse(this.responseText)
       console.log(response)
+      if (response['favorite']) {
+      btn.style.backgroundColor= "#008080";
+      btn.textContent= "unfavor"
+      }else{
+        btn.style.backgroundColor= "green";
+      btn.textContent= "favorit"
+      }
+      console.log("done")
     }
 
     var ajaxRequest = function (status) {
