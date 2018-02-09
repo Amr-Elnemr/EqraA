@@ -94,6 +94,8 @@ def rate_apply(request, book_id):
 def category(request,Id):
 	category = Category.objects.get(id = Id)
 	catBooks = []
+	user = request.user
+	fav = True if user in category.user.all() else False
 	books = category.book_set.all()
 	for x in books:
 		book=Book.objects.get(id = x.id)
@@ -106,19 +108,21 @@ def category(request,Id):
 		bookdetail =BookDetail(book.id,book.title,authors,book.pic,book.summary)
 		catBooks.append(bookdetail)
 	
-	return render(request,'library/category.html',{"category":category,"catBooks":catBooks})
+	return render(request,'library/category.html',{"category":category,"catBooks":catBooks,"fav":fav})
 
 
 def add_to_favorit(request,cat_id):
 	category = Category.objects.get(id = cat_id)
 	user = request.user
 	cat_users = category.user.all()
+	favorite = True
 	if user in cat_users:
-		user.category_set.remove(user)
+		category.user.remove(user)
+		favorite = False
 	else:
-		user.category_set.add(user)
+		category.user.add(user)
 
-	return HttpResponse(json.dumps({'status':'ok'}))
+	return HttpResponse(json.dumps({'favorite':favorite}))
 
 #Author views
 from django.views import generic
