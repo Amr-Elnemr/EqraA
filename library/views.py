@@ -226,7 +226,10 @@ def edit_profile(request):
 			form_data=form.cleaned_data
 			user.first_name = form_data['first_name']
 			user.last_name = form_data['last_name']
-			user.username = form_data['username']
+			if user.username == form_data['username']:
+				user.username = user.username
+			else:
+				user.username = form_data['username']
 			user.set_password(form_data['password'])
 			user.save()
 			user = authenticate(username=user.username, password=user.password)
