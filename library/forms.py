@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import UserProfile
+from .models import User, UserProfile
 
 class userform(forms.ModelForm):
 	password= forms.CharField(widget=forms.PasswordInput, required=True)

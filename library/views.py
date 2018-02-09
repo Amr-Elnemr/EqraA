@@ -11,8 +11,10 @@ import json
 from django.contrib.auth.models import User
 from .forms import EditProfile
 from .forms import UpdateProfileImage
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def home(request):
 	user = request.user
 	categories = user.category_set.all()
@@ -38,6 +40,7 @@ def home(request):
 
 
 #Book details
+@login_required
 def book(request, Id):
 	book = Book.objects.get(id = Id)
 	authors_books = book.write_set.all()
@@ -49,13 +52,14 @@ def book(request, Id):
 	user_status = user_book[0].status if user_book else 0
 	return render(request, 'library/Book.html', {"book":book, "authors":authors, "book_rate": book_rate, "user_rate": user_rate, 'user_status':user_status})
 	
-
+@login_required
 def categories(request):
 	categories = Category.objects.all()
 	user = request.user
 	favCategories =  user.category_set.all()
 	return render(request,'library/categories.html',{"categories":categories,"favCategories":favCategories})
-	
+
+@login_required
 def search(request,q):
 	query = request.GET.get("search",None)
 	matchBooks = Book.objects.filter(title = query)
@@ -72,6 +76,7 @@ def search(request,q):
 	
 
 #Book rate and status
+@login_required
 def rate_apply(request, book_id):
 	book = Book.objects.get(id=book_id)
 	user = request.user
@@ -89,6 +94,7 @@ def rate_apply(request, book_id):
 		return HttpResponse(json.dumps({'req_status':'ok'}))
 
 
+@login_required
 def category(request,Id):
 	category = Category.objects.get(id = Id)
 	catBooks = []
@@ -106,7 +112,7 @@ def category(request,Id):
 	
 	return render(request,'library/category.html',{"category":category,"catBooks":catBooks})
 
-
+@login_required
 def add_to_favorit(request,cat_id):
 	category = Category.objects.get(id = cat_id)
 	user = request.user
@@ -156,7 +162,7 @@ class UserFormView(View):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return redirect('library:home',user.id)
+				return redirect('library:home')
 		return render(request, self.template_name, {'error':errMsg})
 
 #Login Form:
@@ -178,14 +184,14 @@ class loginform(View):
 		if loggedUser is not None:
 			if loggedUser.is_active:
 				login(request, loggedUser)
-				return redirect('library:home',loggedUser.id)
+				return redirect('library:home')
 		return render(request, self.template_name, {'error':LogerrMsg})
 
 ###########################################
 
 
 
-
+@login_required
 def search_all(request):
 	search_word = request.GET['k'] if request.GET['k'] != "0" else 0
 	if search_word:
@@ -201,6 +207,7 @@ def search_all(request):
 	else:
 		return HttpResponse(json.dumps({'req_status':'not_found'}))
 
+
 class ProfileView(View):
 	def  get(self, request):
 		user = request.user
@@ -209,7 +216,8 @@ class ProfileView(View):
 		status = [j.status for j in read_book]
 		# user = User.objects.filter(id=id)[0]
 		return render (request, 'library/profile_page.html', {'user': user, 'books': books, 'status': status})
-	
+
+@login_required	
 def edit_profile(request):
 	if request.method=='POST':
 		form = EditProfile(request.POST)
@@ -233,7 +241,7 @@ def edit_profile(request):
 
 
 
-
+@login_required
 def advanced_search(request):
     search_word = request.GET['k'] if 'k' in request.GET.keys() else 0
     if search_word:
@@ -251,6 +259,7 @@ def advanced_search(request):
 
 
 ####update profile image
+@login_required
 def update_profile_image(request):
 	if request.method=='POST':
 		form = UpdateProfileImage(request.POST)
