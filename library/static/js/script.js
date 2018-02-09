@@ -36,6 +36,7 @@ var ajaxReruest = function (rate, status) {
 }
 
 myRatingDiv.addEventListener("click", function (e) {
+  console.log('aaaaa')
     starNum = e.target.id.substring(4)
     if(e.target.id.substring(0, 4)=='star'){
       ajaxReruest(starNum, 0)
