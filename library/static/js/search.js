@@ -1,6 +1,6 @@
 var searchInput = document.getElementById('searchInput')
 var searchResDiv = document.getElementById('searchResDiv')
-var currentURL = window.location.href
+var currentURL = window.location.origin+"/library/"
 var advancedSearch = document.getElementById('advancedSearch')
 
 
@@ -72,6 +72,7 @@ var ajaxReruest = function (input) {
 	var oReq = new XMLHttpRequest();
 	advancedSearch.href = currentURL + `advanced_search?k=${input}`
 	oReq.onload = ajaxSuccess;
+	console.log(currentURL+`search?k=${input}`)
 	oReq.open("get", currentURL+`search?k=${input}`);
 	oReq.send();
 }

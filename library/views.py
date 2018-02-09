@@ -19,7 +19,7 @@ def home(request,Id):
 	topBooks = []
 	for x in topRate:
 		# global topBooks
-		book=Book.objects.get(id = x.book_id)
+		book = Book.objects.get(id = x.book_id)
 		wAuthor = Write.objects.get(book = book.id)
 		author = Author.objects.get(id = wAuthor.author.id)
 		bookdetail =BookDetail(book.id,book.title,author.id,author.full_name,book.pic,book.summary)
@@ -174,9 +174,11 @@ def advanced_search(request):
     if search_word:
         books = Book.objects.filter(title__icontains=search_word)
         authors = Author.objects.filter(full_name__icontains=search_word)
-
-    books = [i for i in books]
-    authors = [i for i in authors]
-    # return HttpResponse(authors)
-    return render (request, 'library/search.html', {'data':{'books':books, 'authors':authors}})
-    
+        if books or authors:
+            books = [i for i in books]
+            authors = [i for i in authors]
+            return render (request, 'library/search.html', {'data':{'books':books, 'authors':authors}})
+        else:
+            return render (request, 'library/search.html', {'data':{'books':[], 'authors':[]}})
+    else:
+        return render (request, 'library/search.html', {'data':{'books':[], 'authors':[]}})

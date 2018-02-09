@@ -183,3 +183,23 @@
 	width: 120px;
 	height: 180px;
 }
+
+.img-in-div{
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+}
+
+.res-div{
+	height: 200px;
+	width: 150px;
+	float: left;
+	position: relative;
+}
+
+.res-img{
+	height: 100%;
+	width: 100%;
+	position: relative;
+	z-index: -2;
+}

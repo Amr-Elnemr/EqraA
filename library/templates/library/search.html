@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Book</title>
+  <title>Search ...</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
@@ -48,21 +48,47 @@
   </div>
   <div class="col-sm-6">
     
-    <form class="form-inline" action="" id="searchInput">
-      <input class="form-control" type="text" placeholder="Search books">
+    <form method="get" class="form-inline" action="" id="searchInput">
+      <input name="k" class="form-control" type="text" placeholder="Search books" required>
       <button class="btn btn-success" type="submit">Search</button>
     </form>
 
+
+    <div class="searchResDiv border border-success rounded" id="searchResDiv" style="display:none;">
+      <a class="dropdown-item" href="" style="display:none;"><span class="res_type"></span><span></span></a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" id="advancedSearch" href="#">View more</a>
+    </div>
+
     {% if data.books %}
       {% for book in data.books %}
-        {{ book.title }}
+        
+        <a id="book{{ book.id }}" href={% url "library:book" book.id %}>
+          <div class="res-div m-4" >
+            <div class="res-img">
+              <img class="rounded img-in-div" src="/media/{{ book.pic }}">
+            </div>
+            <div class="res-text text-center"><span class="res_type">book: </span>{{ book.title }}</div>
+          </div>
+        </a>
       {% endfor %}
     {% endif %}
 
     {% if data.authors %}
       {% for author in data.authors %}
-        {{ author.full_name }}
+        
+        <a id="author{{ author.id }}" href={% url "library:show_author" author.id %}>
+          <div class="res-div m-4" >
+            <div class="res-img">
+              <img class="rounded img-in-div" src="/media/{{ author.pic }}">
+            </div>
+            <div class="res-text text-center"><span class="res_type">author: </span>{{ author.full_name }}</div>
+          </div>
+        </a>
       {% endfor %}
+    {% endif %}
+    {% if not data.books and not data.authors %}
+        <span class="res_type">No books or authors found!</span>
     {% endif %}
 
   </div>
@@ -70,64 +96,7 @@
 
 </div>
 
-
-<script>
-    
-    // var myRatingDiv = document.getElementById('myrating-div')
-    // var myRating = myRatingDiv.className ? myRatingDiv.className : ""
-    // var hoverRating = myRating
-
-    // var applyRate = function (element,num) {
-    //   for(var i=0; i<num; i++){
-
-    //     element.children[i].className = "fa fa-star checked"
-    //     console.log(element.children[i], num)
-    //   }
-    // }
-
-    // var removeRate = function () {
-
-    //   for(var i=myRating.substring(4); i<myRatingDiv.children.length; i++){
-    //     myRatingDiv.children[i].className = "fa fa-star"
-    //   }
-    //   myRatingDiv.className = ""
-    // }
-    
-    // var rateHandler = function (e) {
-    //   eventType = e.type
-    //   currentNode = e.target
-    //   if(currentNode.id.substring(0, 4)=='star'){
-    //     starsNum = currentNode.id.substring(4)
-    //     hoverRating = "star"+starsNum
-    //     applyRate(currentNode.parentElement, starsNum)
-    //   }
-    //   if(eventType == 'click'){
-    //     currentNode.parentElement.className = "star"+starsNum
-    //     hoverRating = "star"+starsNum
-    //     myRating = "star"+starsNum
-    //   }
-    //   else if (eventType == 'mouseout' && !myRatingDiv.className || hoverRating>myRating) {
-    //     removeRate()
-    //   }
-    // }
-
-    // myRatingDiv.addEventListener('mouseover', rateHandler)
-    // myRatingDiv.addEventListener('click', rateHandler)
-    // myRatingDiv.addEventListener('mouseout', rateHandler)
-   
-    // document.addEventListener("DOMContentLoaded", function (){
-    //   if (myRatingDiv.className){
-    //     var starsNum = myRatingDiv.className.substring(4)
-    //     applyRate(myRatingDiv, starsNum)
-    //   }
-    // }
-    // )
-    
-
- 
-  </script>
-    <script src="{% static "js/script.js" %}"></script>
-    <script src="{% static "js/search.js" %}"></script>
+  <script src="{% static "js/search.js" %}"></script>
 
 </body>
 </html>
