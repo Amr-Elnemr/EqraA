@@ -22,5 +22,7 @@ urlpatterns = [
     re_path(r'^profile_page/$', login_required(views.ProfileView.as_view()), name='profile'),
     re_path(r'^edit_profile/$', views.edit_profile),
     re_path(r'^edit_profile_image/$', views.update_profile_image),
+    re_path(r'^delete_profile/$', views.delete_me),
+
 
 ]

@@ -284,3 +284,8 @@ def update_profile_image(request):
 
 
 
+@ogin_required
+def delete_me(request):
+	user = request.user
+	user.delete()
+	return redirect('/library/regisration')
