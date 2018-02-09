@@ -156,3 +156,22 @@ def edit_profile(request):
 	elif request.method=='GET':
 		form = EditProfile()
 		return render(request, 'library/edit_profile.html', {'form': form})
+
+
+
+
+
+
+
+
+def advanced_search(request):
+    search_word = request.GET['k'] if 'k' in request.GET.keys() else 0
+    if search_word:
+        books = Book.objects.filter(title__icontains=search_word)
+        authors = Author.objects.filter(full_name__icontains=search_word)
+
+    books = [i for i in books]
+    authors = [i for i in authors]
+    # return HttpResponse(authors)
+    return render (request, 'library/search.html', {'data':{'books':books, 'authors':authors}})
+    

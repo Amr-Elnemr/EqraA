@@ -38,91 +38,35 @@
     </li>
   </ul>
 
-  <form class="form-inline" action="" id="searchInput">
-    <input class="form-control" type="text" placeholder="Search books">
-    <button class="btn btn-success" type="submit">Search</button>
-  </form>
+
 </nav>
 <!-- Body -->
 <div class="row">
 
   <div class="col-sm-3">
-    <img id="book-cover" src="/media/{{ book.pic }}">
-    <h5 class="subtitles">Current rating: {{ book_rate }} </h5>
-    <div id="current-rating">
-      {% for star in "12345" %}
-       
-        {% if star|add:"0" <= book_rate %}
-          <p class="fa fa-star checked"></p>
-        {% endif %}
 
-        {% if  star|add:"0" > book_rate %}
-          <p class="fa fa-star "></p>
-        {% endif %}
-      {% endfor %}
-
-    
-  </div>
   </div>
   <div class="col-sm-6">
-  
-    <!-- search here -->
-    <div class="searchResDiv border border-success rounded" id="searchResDiv" style="display:none;">
-      <a class="dropdown-item" href="" style="display:none;"><span class="res_type"></span><span></span></a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" id="advancedSearch" href="#">View more</a>
-    </div>
+    
+    <form class="form-inline" action="" id="searchInput">
+      <input class="form-control" type="text" placeholder="Search books">
+      <button class="btn btn-success" type="submit">Search</button>
+    </form>
 
-
-    <!-- title -->
-    <h2>{{ book.title }}</h2>
-
-    <!-- genres -->
-    <h5 class="subtitles">Genres: </h5>
-    <ul>
-      {% for cat in book.categories.all %}
-        <a class="genres" href="/library/category/{{ cat.id }}">{{ cat.name }}</a>
+    {% if data.books %}
+      {% for book in data.books %}
+        {{ book.title }}
       {% endfor %}
-    </ul>
+    {% endif %}
 
-    <!-- Author -->
-    <h5 class="subtitles">{{ book.title }}</h5>
-    {% for author in authors %}
-      <a href="/library/author/{{author.id}}">{{ author.full_name }}</a>
-    {% endfor %}
-
-    <!-- description -->
-    <h5 class="subtitles">Description: </h5>
-    <p id="description">{{ book.summary }}</p>
+    {% if data.authors %}
+      {% for author in data.authors %}
+        {{ author.full_name }}
+      {% endfor %}
+    {% endif %}
 
   </div>
-  <div class="col-sm-3">
-    <h5 class="subtitles" id="myrating">My rating</h5>
-
-  <div id="myrating-div" class={% if user_rate %}"star{{ user_rate }}"{% endif %}>
-    {% for star in "12345" %}
-      {% if star|add:"0" <= user_rate  %}
-        <p class="fa fa-star checked" id="star{{ star|add:"0" }}"></p>
-      {% endif %}
-
-      {% if  star|add:"0" > user_rate  %}
-        <p class="fa fa-star " id="star{{ star|add:"0" }}"></p>
-      {% endif %}
-    {% endfor %}
-
-
-  </div>
-  
-   <div >
-    <select id="status" name="status" class="form-control read-state">
-      <option value="N" selected>Choose</option>
-      <option value="W" {% if user_status == "W" %} selected {% endif %}>Want to read</option>
-      <option value="R" {% if user_status == "R" %} selected {% endif %}>Read</option>
-      <option value="C" {% if user_status == "C" %} selected {% endif %}>Currently reading</option>
-    </select>
-  </div>
-
-  </div>
+  <div class="col-sm-3"></div>
 
 </div>
 

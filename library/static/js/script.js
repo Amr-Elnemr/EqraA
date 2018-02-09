@@ -28,10 +28,10 @@ function ajaxSuccess () {
 }
 
 var ajaxReruest = function (rate, status) {
-  var oReq = new XMLHttpRequest();
+  var oReq = new XMLHttpRequest()
   var currentURL = window.location.href
-  oReq.onload = ajaxSuccess;
-  oReq.open("get", currentURL+`edit?rate=${rate}&status=${status}`);
+  oReq.onload = ajaxSuccess
+  oReq.open("get", currentURL+`edit?rate=${rate}&status=${status}`)
   oReq.send();
 }
 

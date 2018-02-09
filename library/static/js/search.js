@@ -1,5 +1,8 @@
 var searchInput = document.getElementById('searchInput')
 var searchResDiv = document.getElementById('searchResDiv')
+var currentURL = window.location.href
+var advancedSearch = document.getElementById('advancedSearch')
+
 
 var exist = function (parent, id) {
 	for (var i in parent.children) {
@@ -14,7 +17,7 @@ var exist = function (parent, id) {
 
 var delOthers = function (parent, idArr) {
 	for (var i=0; i < parent.children.length; i++) {
-		if(idArr.indexOf(parent.children[i].id)<0 && parent.children[i].id) {
+		if(idArr.indexOf(parent.children[i].id)<0 && parent.children[i].id && parent.children[i].id!='advancedSearch') {
 			parent.children[i].remove()
 			i = i-1
 		}
@@ -50,6 +53,7 @@ function ajaxSuccess () {
 			var books = response['data']['books']
 			var authors = response['data']['authors']
 			var allIds = response['data']['all_ids']
+
 			if (books.length) {
 				populateSearchRes('book', books, allIds)
 			}
@@ -65,11 +69,11 @@ function ajaxSuccess () {
 }
 
 var ajaxReruest = function (input) {
-  var oReq = new XMLHttpRequest();
-  var currentURL = window.location.href
-  oReq.onload = ajaxSuccess;
-  oReq.open("get", currentURL+`search?k=${input}`);
-  oReq.send();
+	var oReq = new XMLHttpRequest();
+	advancedSearch.href = currentURL + `advanced_search?k=${input}`
+	oReq.onload = ajaxSuccess;
+	oReq.open("get", currentURL+`search?k=${input}`);
+	oReq.send();
 }
 
 

@@ -6,6 +6,7 @@ app_name = 'library'
 urlpatterns = [
     re_path(r'^book/([0-9]+)/$', views.book, name="book"),
     re_path(r'^book/([0-9]+)/edit$', views.rate_apply, name="edit_book"),
+    re_path(r'advanced_search', views.advanced_search, name="search"),
     re_path(r'search', views.search_all, name="search"),
     re_path(r'^home/(?P<Id>[0-9]+)/$',views.home, name='home'),
     path('search/',views.search, name='search'),
