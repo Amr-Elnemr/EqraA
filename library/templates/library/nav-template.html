@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+{% block title%}
+  <title>home</title>
+{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-sm">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="#">EqraA</a>
+    <img src="{% static "images/rlogo.png" %}" alt="logo" style="width:40px;">
+  </a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Home</a>
+    </li>
+
+    <li class="nav-item">
+      <img src="{% static "images/user.png" %}" alt="logo" style="width:40px;">
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">My profile</a>
+    </li>
+
+    </li>
+    <li class="nav-item">
+      <img src="{% static "images/genres.png" %}" alt="logo" style="width:40px;">
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Genres</a>
+    </li>
+  </ul>
+
+  <form class="form-inline" action="advanced_search" method="get">
+    <input class="form-control" type="text" id="searchInput" placeholder="Search books" name="k" required>
+    <button class="btn btn-success" type="submit">Search</button>
+  </form>
+
+
+  <a href="{% url 'library:login' %}"><button id="signout" type="button"  >Signout</button></a>
+
+
+</nav>
+
+<div class="row mt-0">
+  <div class="col-5"></div>
+  <div class="col-5">
+    <!-- search here -->
+    <div class="searchResDiv border rounded" id="searchResDiv" style="display:none;">
+      <a class="dropdown-item" href="" style="display:none;"><span class="res_type"></span><span></span></a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" id="advancedSearch" href="#">View more</a>
+    </div>
+
+  </div>
+  <div class="col-2"></div>
+</div>
+
+{% block body %}
+{% endblock %}

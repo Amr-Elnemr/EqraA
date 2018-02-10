@@ -1,0 +1,17 @@
+{% extends "library/nav-template.html" %}
+{% load static %}
+{% block body %}
+<div class="container" >
+<h2> Edit your Profile </h2>
+
+<form method='post'> {% csrf_token %}
+{{ form.as_p }}
+<input type="submit" name="submit" value="submit" class="btn btn-default">
+</form>
+</div>
+
+  <script src="{% static "js/search.js" %}"></script>
+
+</body>
+</html>
+{% endblock %}

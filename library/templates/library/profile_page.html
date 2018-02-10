@@ -1,0 +1,78 @@
+{% extends "library/nav-template.html" %}
+{% load static %}
+{% block body %}
+<!-- content -->
+<div class="container-fluid">
+  <div class="userProfile row">
+
+    
+    <div class="profilePicClass col-sm-2">
+      <div>
+        <img id="profilePic" src="/media/{{ user.userprofile.pic }}">
+      </div>
+      <div>
+        <font size="2"><a href="/library/edit_profile_image">(update profile pic)</a></font>
+      </div>  
+    </div>
+
+
+    <div class="userDetailsBox col-sm-10">
+      <h1 id="userName">{{ user.first_name}} {{user.last_name }}</h1>
+      <div id="editProfile"><font size="2"><a href="/library/edit_profile">(edit profile)</a></font></div>  
+      <div><font size="2"><a href="/library/delete_profile">(delete my profile)</a></font></div>
+    </div>
+
+
+  </div>
+  <!-- user book shelf -->
+  <br>
+  <div class="bookShelf">
+  <div><h3>Your Books</h3></div>
+  	<div class="container">
+  	<div class="row" >
+  	{% for i in books %}
+    <div class="book col-sm-2">
+      <a href="{% url 'library:book' i.id %}">
+        <div><img class="book_image" src="/media/{{ i.pic }}"></div>
+        <div>{{i.title}}</div>
+      </a>
+    </div>
+    {% endfor %}
+    </div>
+    <div class="row">
+    {% for i in status %}
+      <div class="col-sm-2">
+          <select class="form-control read-state">
+          {% if i in 'W' %}
+            <option selected >Want to read</option>
+            <option>Currnetly reading</option>
+            <option>Read</option>
+            {% elif i in 'C' %}
+            <option>Want to read</option>
+            <option>Read</option>
+            <option  selected >Currnetly reading</option>
+            {% elif i in 'R' %}
+            <option>Want to read</option>
+            <option selected >Read</option>
+            <option>Currnetly reading</option>
+            {% endif %}
+          </select>
+      </div>
+    {% endfor %}  
+
+    </div>
+   
+   </div>
+    
+
+   
+
+  </div>
+
+
+</div>
+  <script src="{% static "js/search.js" %}"></script>
+
+</body>
+</html>
+{% endblock %}

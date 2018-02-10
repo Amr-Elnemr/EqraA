@@ -1,0 +1,260 @@
+.navbar {
+    background-color: #008080;
+    border-color: black;
+}
+
+.favorit {
+	background-color: green;
+
+}
+#favorit-botton{
+	background-color: green;
+	width: 20%;
+	align-self: right;
+}
+
+.navbar-brand{
+	font-size: 50px;
+	font-weight: bold;
+	font-family: serif;
+	color: white;
+	margin-right: 50px;
+}
+
+.nav-link{
+	color:white;
+}
+
+#div-category{
+	padding-left: 50px;
+	margin-right: 100px;
+}
+
+.navbar-brand:hover{
+	color: white;
+}
+
+.nav-link:hover {
+	color:#ffe6cc;
+}
+.form-inline{
+	margin-left: 50px;
+}
+
+.row{
+	margin-top: 10px;
+}
+
+.side-active{
+ 	background-color: #008080;
+ 	color: white;
+}
+
+.list-link{
+	margin: 10px;
+}
+.img-div{
+	width: 100%;
+	height:85%;
+}
+.div-author{
+	margin-top: -14px;
+}
+.top-rate-tittle{
+	
+}
+.list-item{
+	width: 70%;
+	height: 20%;
+}
+.top-rate-bar{
+
+}
+
+.row.vdivide [class*='col-']:not(:last-child):after {
+  background: #e0e0e0;
+  width: 1px;
+  content: "";
+  display:block;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  right: 0;
+  min-height: 70px;
+}
+
+.custom-row{
+	margin-top: 5%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+#Author-cover{
+	width:100%;
+}
+
+#other-books{
+	width: 40%;
+	margin-top:10%;
+}
+
+#book-cover{
+	width:80%;
+}
+
+#current-rating{
+	text-align: left;
+}
+
+.btn {
+	border-color: white;
+}
+
+.subtitles{
+	margin-top: 5%;
+}
+
+.genres{
+	margin-right: 20px;
+}
+
+#description{
+	text-align: justify;
+	text-justify: inter-word;
+}
+
+.read-state{
+	background-color: #EEE8AA;
+	width: 60%;
+	margin-top: 10%;
+}
+
+
+
+.fa {
+    font-size: 25px;
+    text-decoration: none !important;
+	color: inherit;
+}
+
+.checked {
+    color: orange;
+}
+
+.row.vdivide [class*='col-']:not(:last-child):after {
+  background: #e0e0e0;
+  width: 1px;
+  content: "";
+  display:block;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  right: 0;
+  min-height: 70px;
+}
+.grid-books{
+	text-align: center;
+}
+
+.fa-star:hover{
+	color: black;
+}
+
+.searchResDiv{
+	z-index: 3;
+	position: absolute;
+	background-color: #fff;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.res_type{
+	font-style: italic;
+}
+
+.userDetailsBox{
+	width: 100%;
+	float: left;
+}
+#profilePic{
+	/*float: left;*/
+	width: 120px;
+	height: 180px;
+}
+#userName{
+	width: 400px;
+}
+#editProfile{
+	/*margin-left: 120px; */
+}
+
+.userDetailBox{
+	/*padding-left: 100px;*/
+}
+
+.book{
+	display: inline-block;
+}
+
+.book_image{
+	width: 120px;
+	height: 180px;
+}
+
+.img-in-div{
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+}
+
+.res-div{
+	height: 200px;
+	width: 150px;
+	float: left;
+	position: relative;
+}
+
+.res-img{
+	height: 100%;
+	width: 100%;
+	position: relative;
+	z-index: -2;
+}
+
+
+#signout{
+	background: #008080;
+	color: white;
+	border: none;
+	font-size: 21px;
+	position: relative;
+	left: 350%;
+}
+
+#signout:hover{
+	color:#DCDCDC;
+	cursor: pointer;
+}
+
+
+.book-pic{
+	color: #008080;
+	font-weight: bold;
+}
+
+.book-pic:hover{
+	font-weight: bold;
+	color:black;
+	line text-decoration: none;
+}
+
+.othbooks{
+	border-style: groove;
+}
+
+.authbks{
+	font-size: 150%;
+}
+
+.fname{
+	font-weight: bold;
+}

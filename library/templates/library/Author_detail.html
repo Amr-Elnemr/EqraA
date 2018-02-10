@@ -1,0 +1,222 @@
+{% extends "library/nav-template.html" %}
+{% load static %}
+{% block body %}
+
+<!-- ------------------ Body -------------------- -->
+<div class="row">
+  <div class="col-sm-3">
+    <img id="Author-cover" src="/media/{{ Author.pic }}">
+  </div>
+  <div class="col-sm-6">
+
+  <!-- title -->
+  <h2 class="fname">{{ Author.full_name }}</h2>
+
+  <!-- Birth -->
+  <h5 class="subtitles">Birth: </h5>
+  <p>{{ Author.date_of_birth }}</p>
+
+    <!-- Death -->
+    {% if Author.date_of_death %}
+      <h5 class="subtitles">Death: </h5>
+      <p>{{ Author.date_of_death }}</p>
+    {% endif %}
+
+    <!-- Website -->
+    <h5 class="subtitles">Website: </h5>
+    <a href="{{ Author.url }}">{{ Author.url }}</a>
+
+    <!-- genres -->
+    <h5 class="subtitles">Genres:</h5>
+    <ul>
+        {% for cat in Author.write_set.all.0.book.categories.all %}
+          <a href={% url "library:book" cat.id %}>{{ cat.name }}</a> &nbsp;&nbsp; 
+        {% endfor %}
+    </ul>
+
+
+    <!-- description -->
+    <h5 class="subtitles">About: </h5>
+    <p id="description">{{ Author.bio }}</p>
+
+  </div>
+  <div class="col-sm-3  othbooks">
+    <h5 align="center" class="subtitles authbks">Books for this Author </h5>
+
+
+
+    <div class="div.ex3" >
+
+  {% if Author.write_set.all.0.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.0.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.0.book.id %}">
+      {{ Author.write_set.all.0.book.title }}</a></div>
+      </frame>
+    {% endif %}
+    
+
+    {% if Author.write_set.all.1.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.1.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.1.book.id %}">
+      {{ Author.write_set.all.1.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.2.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.2.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.2.book.id %}">
+      {{ Author.write_set.all.2.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.3.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.3.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.3.book.id %}">
+      {{ Author.write_set.all.3.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.4.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.4.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.4.book.id %}">
+      {{ Author.write_set.all.4.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.5.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.5.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.5.book.id %}">
+      {{ Author.write_set.all.5.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.6.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.6.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.6.book.id %}">
+      {{ Author.write_set.all.6.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.7.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.7.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.7.book.id %}">
+      {{ Author.write_set.all.7.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.8.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.8.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.8.book.id %}">
+      {{ Author.write_set.all.8.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+
+    {% if Author.write_set.all.9.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.9.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.9.book.id %}">
+      {{ Author.write_set.all.9.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.10.book.id %}
+    <frame  class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.10.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.10.book.id %}">
+      {{ Author.write_set.all.10.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.11.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.11.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.11.book.id %}">
+      {{ Author.write_set.all.11.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+
+    {% if Author.write_set.all.12.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.12.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.12.book.id %}">
+      {{ Author.write_set.all.12.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.13.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.13.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.13.book.id %}">
+      {{ Author.write_set.all.13.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.14.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.14.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.14.book.id %}">
+      {{ Author.write_set.all.14.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.15.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.15.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.15.book.id %}">
+      {{ Author.write_set.all.15.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.16.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.16.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.16.book.id %}">
+      {{ Author.write_set.all.16.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.17.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.17.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.17.book.id %}">
+      {{ Author.write_set.all.17.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.18.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.18.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.18.book.id %}">
+      {{ Author.write_set.all.18.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    {% if Author.write_set.all.19.book.id %}
+    <frame class = "book-frame" align="center">
+    <div align="center"><img id="other-books" src="/media/{{ Author.write_set.all.19.book.pic }}"></div>
+      <div align="center"><a class="book-pic" align="center" href="{% url 'library:book' Author.write_set.all.19.book.id %}">
+      {{ Author.write_set.all.19.book.title }}</a></div>
+      </frame>
+    {% endif %}
+
+    </div>
+
+
+  </div>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

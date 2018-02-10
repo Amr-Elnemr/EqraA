@@ -1,0 +1,78 @@
+{% extends "library/nav-template.html" %}
+{% load static %}
+{% block body %}
+
+<!-- Body -->
+<div class="row m-1">
+  <!-- search options !-->
+  <div class="col-sm-2">
+
+    <div id="select-res-type" class="mt-5 ml-5">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="books-only" checked >
+        <label class="custom-control-label" for="books-only">Books</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="authors-only" checked >
+        <label class="custom-control-label" for="authors-only">Authors</label>
+      </div>      
+    </div>
+
+  </div>
+
+
+  <div class="col-sm-10">
+    
+    <div class="searchResDiv border border-success rounded" id="searchResDiv" style="display:none;">
+      <a class="dropdown-item" href="" style="display:none;"><span class="res_type"></span><span></span></a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" id="advancedSearch" href="#">View more</a>
+    </div>
+
+  <div id="books-only-div">
+    {% if data.books %}
+      {% for book in data.books %}
+        <a id="book{{ book.id }}" href={% url "library:book" book.id %}>
+          <div class="res-div m-4" >
+            <div class="res-img">
+              <img class="rounded img-in-div" src="/media/{{ book.pic }}">
+            </div>
+            <div class="res-text text-center"><span class="res_type">book: </span>{{ book.title }}</div>
+          </div>
+        </a>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div id="authors-only-div">
+    
+    {% if data.authors %}
+      {% for author in data.authors %}
+        
+        <a id="author{{ author.id }}" href={% url "library:show_author" author.id %}>
+          <div class="res-div m-4" >
+            <div class="res-img">
+              <img class="rounded img-in-div" src="/media/{{ author.pic }}">
+            </div>
+            <div class="res-text text-center"><span class="res_type">author: </span>{{ author.full_name }}</div>
+          </div>
+        </a>
+      {% endfor %}
+    {% endif %}
+  </div>
+    {% if not data.books and not data.authors %}
+        <span class="res_type">No books or authors found!</span>
+    {% endif %}
+
+  </div>
+  
+  {# <div class="col-sm-3"></div> #}
+
+</div>
+
+  <script src="{% static "js/search.js" %}"></script>
+  <script src="{% static "js/advanced_search.js" %}"></script>
+
+</body>
+</html>
+{% endblock %}
