@@ -12,6 +12,7 @@ A Simple book reviewing system
 ## Installing
 
 1- Create a database and name it 'EqraA'
+
 2- In the project folder run:
 ```
 		python3 manage.py makemigrations library
