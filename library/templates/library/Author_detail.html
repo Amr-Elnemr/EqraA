@@ -30,7 +30,7 @@
     <h5 class="subtitles">Genres:</h5>
     <ul>
         {% for cat in Author.write_set.all.0.book.categories.all %}
-          <a href={% url "library:book" cat.id %}>{{ cat.name }}</a> &nbsp;&nbsp; 
+          <a href={% url "library:category" cat.id %}>{{ cat.name }}</a> &nbsp;&nbsp; 
         {% endfor %}
     </ul>
 

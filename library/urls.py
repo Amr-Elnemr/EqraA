@@ -1,6 +1,9 @@
 from django.urls import path, re_path
 from . import views
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import logout
+from django.conf import settings
+
 
 app_name = 'library'
 
@@ -12,7 +15,6 @@ urlpatterns = [
     re_path(r'^category/(?P<Id>[0-9]+)/$',views.category,name='category'),
     re_path(r'^category/([0-9]+)/fav$', views.add_to_favorit, name="favorite_cat"),
     path('home/',views.home, name='home'),
-    path('search/',views.search, name='search'),
     path('category/',views.categories, name='categories'),
     path('author/<int:pk>/', login_required(views.show_author.as_view()), name='show_author'),
 
@@ -24,5 +26,5 @@ urlpatterns = [
     re_path(r'^edit_profile_image/$', views.update_profile_image),
     re_path(r'^delete_profile/$', views.delete_me),
 
-
+    re_path(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout')
 ]

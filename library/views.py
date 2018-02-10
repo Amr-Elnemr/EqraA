@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
@@ -58,21 +57,6 @@ def categories(request):
 	user = request.user
 	favCategories =  user.category_set.all()
 	return render(request,'library/categories.html',{"categories":categories,"favCategories":favCategories})
-
-@login_required
-def search(request,q):
-	query = request.GET.get("search",None)
-	matchBooks = Book.objects.filter(title = query)
-	books = []
-	for x in matchBooks:
-		global userBooks
-		book=Book.objects.get(id = x.book_id)
-		wAuthor = Write.objects.get(book = book.id)
-		author = Author.objects.get(id = wAuthor.author.id)
-		bookdetail =BookDetail(book.id,book.title,author.id,author.full_name,book.pic,book.summary)
-		books.append(bookdetail)
-		data ={"books":books}
-	HttpResponse("ghgujhjh")
 	
 
 #Book rate and status
@@ -142,8 +126,8 @@ class UserFormView(View):
 	template_name='library/registration.html'
 
 	def get(self, request):
-		if request.user.is_authenticated:
-			return redirect('library:home')
+		# if request.user.is_authenticated:
+		# 	return redirect('library:home')
 
 		form = self.form_class(None)
 		return render(request, self.template_name, {'form': form})
@@ -151,51 +135,54 @@ class UserFormView(View):
 	def post(self, request):
 		form = self.form_class(request.POST)
 
+		# check non existance:
+		if User.objects.filter(username=form.data['username']).exists():
+			inMsg = 'sorry but this username is already taken'
+			return render(request, self.template_name, {'error': inMsg})
+		if form.is_valid():
+			user = form.save(commit=False)
+			username = form.cleaned_data['username']
+			password = form.cleaned_data['password']
+			user.set_password(password)
+			user.save()
+			user = User.objects.get(username=username)
+			UserProfile.objects.create(user=user)
+		else:
+	         return render(request, self.template_name, {'error': errMsg})
 
-	# check non existance:
-	if User.objects.filter(username=form.data['username']).exists():
-		inMsg = 'sorry but this username is already taken'
-		return render(request, self.template_name, {'error': inMsg})
-	if form.is_valid():
-		user = form.save(commit=False)
-		username = form.cleaned_data['username']
-		password = form.cleaned_data['password']
-		user.set_password(password)
-		user.save()
-	else:
-         return render(request, self.template_name, {'error': errMsg})
-
-# Authentication:
-    user=authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return redirect('library:home')
-    return render(request, self.template_name, {'error':errMsg})
+		# Authentication:
+		user=authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				return redirect('library:home')
+				# return redirect('library:home',user.id)
+		return render(request, self.template_name, {'error':errMsg})
 
 #Login Form:
 LogerrMsg="Sorry, but your username or password is incorrect."
 class loginform(View):
     form_class=loginform
     template_name='library/login.html'
+
     def get(self, request):
-        if request.user.is_authenticated:
-            return redirect('library:home')
+        # if request.user.is_authenticated:
+        #     return redirect('library:home')
 
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
 
-	def post(self, request):
-		form = self.form_class(request.POST)
-		username=form.data['username']
-		password=form.data['password']
-		# check authentication:
-		loggedUser = authenticate(username=username, password=password)
-		if loggedUser is not None:
-			if loggedUser.is_active:
-				login(request, loggedUser)
-				return redirect('library:home')
-		return render(request, self.template_name, {'error':LogerrMsg})
+    def post(self, request):
+    	form = self.form_class(request.POST)
+    	username=form.data['username']
+    	password=form.data['password']#check authentication
+    	loggedUser = authenticate(username=username, password=password)
+    	if loggedUser is not None:
+    		if loggedUser.is_active:
+    			login(request, loggedUser)
+    			return redirect('library:home')
+    			# return redirect('library:home',loggedUser.id)
+    	return render(request, self.template_name, {'error':LogerrMsg})
 
 ###########################################
 
@@ -275,6 +262,7 @@ def advanced_search(request):
 ####update profile image
 @login_required
 def update_profile_image(request):
+	form = UpdateProfileImage(request.POST, request.FILES)
 	if request.method=='POST':
 		form = UpdateProfileImage(request.POST, request.FILES)
 		if form.is_valid():
@@ -295,4 +283,9 @@ def delete_me(request):
 	user = request.user
 	user = User.objects.get(id = user.id)
 	user.delete()
+	return redirect('/library/login')
+
+#####################################################
+def logout(request):
+	logout(request)
 	return redirect('/library/login')

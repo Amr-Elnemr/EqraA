@@ -45,7 +45,7 @@ class Write(models.Model):
 #extend class user
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	pic = models.ImageField(upload_to = 'user', blank=True)
+	pic = models.ImageField(upload_to = 'user', default='user/user.png')
 	
 	def __str__(self):
 		return self.user.username
